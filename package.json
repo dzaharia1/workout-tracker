@@ -1,0 +1,31 @@
+{
+  "name": "Workout Tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js & gulp"
+  },
+  "author": "Dan Zaharia",
+  "license": "ISC",
+  "dependencies": {
+    "consolidate": "^0.16.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "node-gyp": "^7.1.2",
+    "node-sass": "^6.0.0",
+    "pg": "^8.6.0",
+    "sass": "^1.32.13",
+    "sqlstring": "^2.3.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-scss-lint": "^1.0.0"
+  }
+}

@@ -1,6 +1,5 @@
 const gulp = require('gulp'),
 	sass = require('gulp-sass'),
-	// scsslint = require('gulp-scss-lint') ,
 	browserSync = require('browser-sync'),
 	plumber = require('gulp-plumber'),
 	reload = browserSync.reload;

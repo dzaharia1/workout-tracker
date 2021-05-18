@@ -1,0 +1,115 @@
+.header {
+    @extend %horizontal-center;
+    width: 100%;
+    padding: 16px 16px 8px;
+
+    &__menu-button {
+        width: 24px;
+        height: 24px;
+        background-image: url('/img/menu.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    &__title {
+        @extend %subtitle;
+        flex: 1;
+        text-align: center;
+    }
+
+    &__journal-button {
+        @extend %caption;
+    }
+}
+
+.menu {
+    @extend %vertical-start;
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    width: 100vw;
+    height: 100vh;
+    width: 100%;
+    padding: 16px 16px 0px;
+    background-color: transparentize($white, .8);
+    opacity: 0;
+    backdrop-filter: blur(2px);
+    transition: .5s left cubic-bezier(0.25, 0.9, 0.21, 1),
+                .5s opacity cubic-bezier(0.25, 0.9, 0.21, 1);
+    
+    &--active {
+        opacity: 1;
+        left: 0;
+    }
+
+    &__header,
+    &__routine-list,
+    &__create-routine {
+        z-index: 10;
+    }
+    
+    &__header {
+        @extend %horizontal-center;
+        margin-bottom: 24px;
+        z-index: 1000;
+    }
+
+    &__close {
+        margin-right: 16px;
+    }
+
+    &__close {
+        width: 24px;
+        height: 24px;
+        background-image: url('/img/back.svg');
+    }
+
+    &__title {
+        @extend %subtitle;
+    }
+
+    &__routine {
+        @extend %horizontal-center;
+        width: 100%;
+        margin-bottom: 24px;
+
+        &-list {
+            flex: 1;
+            width: 100%;
+        }
+
+        p {
+            @extend %body--strong;
+            flex: 1;
+        }
+
+        &-completed {
+            @extend %caption;
+        }
+
+        &-drag-handle {
+            width: 16px;
+            height: 16px;
+            background-image: url('/img/menu.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-left: 16px;
+        }
+    }
+
+    &__create-routine {
+        @extend %horizontal-center;
+        @extend %body--strong;
+
+        position: relative;
+        left: -16px;
+        width: 100vw;
+        background-color: $slate5;
+        color: $white;
+        padding: 12px;
+
+        img {
+            margin-right: 12px;
+        }
+    }
+}

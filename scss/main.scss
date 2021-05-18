@@ -10,10 +10,26 @@
 	margin: 0;
 }
 
+button {
+	background: none;
+	border: none;
+	border-radius: none;
+}
+
 a {
 	text-decoration: none;
 }
 
+ul, ol {
+	list-style: none;
+}
+
 .hidden {
 	display: none;
+}
+
+body {
+	@extend %body;
+	color: $slate5;
+	font-size: 12px;
 }

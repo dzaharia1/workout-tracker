@@ -1,0 +1,60 @@
+.footer {
+    @extend %horizontal-end;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: $slate5;
+    color: $white;
+    padding: 8px 16px;
+}
+
+.routine {
+    &__progress {
+        p {
+            @extend %body;
+            margin-bottom: 4px;
+        }
+    }
+
+    &__progress-bar {
+        @extend %vertical-start;
+        flex-wrap: wrap;
+        height: 35px;
+    }
+
+    &__progress-step--upcoming,
+    &__progress-step--complete {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin: 0px 3px 3px 0px;
+
+        &:nth-child(even) {
+            margin-bottom: 0;
+        }
+    }
+
+    &__progress-step--complete {
+        background-color: $white;
+    }
+
+    &__progress-step--upcoming {
+        border: 3px $white solid;
+    }
+
+    &__add-to-log {
+        @extend %horizontal-center;
+        @extend %caption--strong;
+        padding: 8px 18px;
+        color: $white;
+        border: 3px $white solid;
+        margin-bottom: 8px;
+
+        div {
+            margin-right: 8px;
+            margin-top: 2px;
+        }
+    }
+}

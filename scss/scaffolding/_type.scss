@@ -1,19 +1,62 @@
-%helvetica {
-  font-family: HelveticaNeue, Helvetica Neue, Helvetica, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+$montserrat: 'Montserrat', helvetica, sans-serif;
+
+%montserrat--regular {
+  font-family: $montserrat;
+  font-weight: normal;
 }
-%helvetica-light {
-  @extend %helvetica;
-  font-weight: 200;
+
+%montserrat--semi-bold {
+  font-family: $montserrat;
+  font-weight: 600;
 }
-%helvetica-normal {
-  @extend %helvetica;
-  font-weight: 400;
-}
-%helvetica-medium {
-  @extend %helvetica;
-  font-weight: 500;
-}
-%helvetica-bold {
-  @extend %helvetica;
+
+%montserrat--bold {
+  font-family: $montserrat;
   font-weight: 700;
+}
+
+%title-1 {
+  @extend %montserrat--bold;
+  font-size: 34px;
+  letter-spacing: .04em;
+  line-height: 41px;
+}
+
+%title-2 {
+  @extend %montserrat--bold;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: .04em;
+}
+
+%subtitle {
+  @extend %montserrat--semi-bold;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: .04em;
+}
+
+%body {
+  @extend %montserrat--regular;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: .02em;
+}
+
+%body--strong {
+  @extend %body;
+  font-weight: 600;
+}
+
+%caption {
+  @extend %montserrat--regular;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+%caption--strong {
+  @extend %caption;
+  font-weight: 600;
 }

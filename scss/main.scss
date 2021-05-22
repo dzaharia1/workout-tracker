@@ -3,6 +3,7 @@
 @import 'scaffolding/colors';
 
 @import 'components/header';
+@import 'components/footer';
 
 * {
 	box-sizing: border-box;
@@ -10,10 +11,28 @@
 	margin: 0;
 }
 
+button {
+	background: none;
+	border: none;
+	border-radius: none;
+}
+
 a {
 	text-decoration: none;
 }
 
+ul, ol {
+	list-style: none;
+}
+
 .hidden {
 	display: none;
+}
+
+body {
+	@extend %body;
+	color: $slate5;
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
 }

@@ -11,25 +11,16 @@
         <h2 class="header__journal-button">Sort</h2>
     </div>
     <ul class="menu__routine-list">
-        <li class="menu__routine">
-            <p>Routine A</p>
-            <aside class="menu__routine-completed">last – 01 / 06 / ‘21</aside>
-            <button class="menu__routine-drag-handle"></button>
-        </li>
-        <li class="menu__routine">
-            <p>Routine B</p>
-            <aside class="menu__routine-completed">last – 01 / 06 / ‘21</aside>
-            <button class="menu__routine-drag-handle"></button>
-        </li>
-        <li class="menu__routine">
-            <p>Routine C</p>
-            <aside class="menu__routine-completed">last – 01 / 06 / ‘21</aside>
-            <button class="menu__routine-drag-handle"></button>
-        </li>
-        <li class="menu__routine">
-            <p>Routine D</p>
-            <aside class="menu__routine-completed">last – 01 / 06 / ‘21</aside>
-            <button class="menu__routine-drag-handle"></button>
+        <% for (let routine of routines) { %>
+            <li class="menu__routine" data-id="<%= routine.routine_id %>" data-order="<%= routine.routine_order %>">
+                <p><%= routine.routine_name %></p>
+                <aside class="menu__routine-completed"><%= routine.to_char %></aside>
+                <button class="menu__routine-drag-handle"></button>
+            </li>
+        <% } %>
+        <li class="menu__add-routine">
+            <input type="text" id="" placeholder="Name your routine">
+            <button class="menu__cancel-add"></button>
         </li>
     </ul>
     <button class="menu__create-routine">

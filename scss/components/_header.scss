@@ -135,4 +135,40 @@
             margin-right: 12px;
         }
     }
+
+    &__add-routine {
+        @extend %horizontal-center;
+        display: none;
+        width: 100%;
+        border-bottom: 2px $slate5 solid;
+        padding: 8px;
+
+        &--visible {
+            display: flex;
+        }
+
+        input {
+            @extend %body--strong;
+            flex: 1;
+            border: none;
+            color: $slate5;
+
+            &::focus {
+                border: 2px $slate3 solid;
+            }
+        }
+
+        button {
+            width: 24px;
+            height: 24px;
+            background-image: url(/img/add.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-left: 12px;
+
+            &.menu__cancel-add {
+                transform: rotate(45deg);
+            }
+        }
+    }
 }

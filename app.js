@@ -3,6 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
+const { getRoutines, addRoutine } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -18,8 +19,14 @@ app.set('view engine', 'ejs');
 app.host = app.set('host', process.env.HOST || localhost);
 app.port = app.set('port', process.env.PORT || localport);
 
-app.get('/', function(req, res) {
-	res.render('index', { data: 'test data' });
+app.get('/', async (req, res) => {
+  let routines = await getRoutines();
+	res.render('index', { routines });
+});
+
+app.post('/addroutine/:routineName/:routineOrder', async(req, res) => {
+  console.log(`Adding ${req.params.routineName} to routines`);
+  addRoutine(req.params.routineName, req.params.routineOrder);
 });
 
 var server = app.listen(app.get('port'), function() {

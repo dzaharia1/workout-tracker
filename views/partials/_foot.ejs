@@ -1,2 +1,29 @@
+    <script>
+        let readyFunctions = [];
+        if (document.readyState != 'loading') {
+            runReadyFunctions();
+        }
+        else {
+            document.addEventListener('DOMContentLoaded', runReadyFunctions)
+        }
+        function runReadyFunctions() {
+            for (thisFunction of readyFunctions) {
+                thisFunction();
+            }
+        }
+        function APIRequest(verb, route, params) {
+            let request = new XMLHttpRequest();
+            let url = window.location.href;
+            url += `${route}/`;
+            for (let i = 2; i < arguments.length; i++) {
+                url += `${arguments[i]}/`;
+            }
+            console.log(url);
+            request.open(verb, url, true);
+            request.onload = () => { };
+            request.send();
+        }
+    </script>
+    <script src="/scripts/header.js"></script>
 </body>
 </html>

@@ -32,13 +32,15 @@ async function runQuery(query) {
 
 module.exports = {
     getRoutines: async () => {
-        return await runQuery(`SELECT * FROM categories ORDER BY id;`);
+        return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon / dd / yy') FROM routines ORDER BY routine_order;`);
     },
-    addRoutine: async (categoryName) => {
-        const fixedName = SqlString.escape(categoryName);
+    addRoutine: async (routineName, routineOrder) => {
+        const fixedOrder = parseInt(routineOrder, 10);
+        const fixedName = SqlString.escape(routineName);
         const slug = fixedName.replace(/\s+/g, '').toLowerCase();
-        return await runQuery(`INSERT INTO routines (routine_name, routine_slug)
-            VALUES (${fixedName}, ${slug})`);
+        return await runQuery(`INSERT INTO routines (routine_name, routine_slug, routine_order)
+            VALUES (${fixedName}, ${slug}, ${fixedOrder})
+            RETURNING routine_id;`);
     },
     changeRoutineOrder: async (categorySlug, order) => {
         // todo

@@ -12,7 +12,7 @@ if (process.env.DATABASE_URL) {
     });
 } else {
     client = new Client({
-        connectionString: `postgresql://dan@localhost:5432/workout`
+        connectionString: `postgresql://dan@localhost:5432/workouts`
     });
 }
 client.connect();

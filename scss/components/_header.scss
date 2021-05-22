@@ -107,6 +107,15 @@
 
         &-completed {
             @extend %caption;
+
+            &--oldest {
+                @extend %body--strong;
+                padding: 3px 12px;
+                background-color: $green;
+                border-radius: 4px;
+                margin: -3px 0;
+                color: $white;
+            }
         }
 
         &-drag-handle {

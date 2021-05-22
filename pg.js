@@ -32,19 +32,28 @@ async function runQuery(query) {
 
 module.exports = {
     getRoutines: async () => {
-        return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon / dd / yy') FROM routines ORDER BY routine_order;`);
+        return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines ORDER BY routine_order;`);
+    },
+    getUpNextRoutine: async () => {
+        return await runQuery(`SELECT * FROM ROUTINES
+        ORDER BY last_logged
+        FETCH FIRST 1 rows ONLY;`);
     },
     addRoutine: async (routineName, routineOrder) => {
         const fixedOrder = parseInt(routineOrder, 10);
         const fixedName = SqlString.escape(routineName);
         const slug = fixedName.replace(/\s+/g, '').toLowerCase();
         return await runQuery(`INSERT INTO routines (routine_name, routine_slug, routine_order)
-            VALUES (${fixedName}, ${slug}, ${fixedOrder})
-            RETURNING routine_id;`);
+        VALUES (${fixedName}, ${slug}, ${fixedOrder})
+        RETURNING routine_id;`);
     },
     changeRoutineOrder: async (categorySlug, order) => {
         // todo
-    }
+    },
+    getAllMovements: async () => {},
+    getRoutineMovements: async (routineId) => {
+        
+    },
     // getCategories: async () => {
     //     return await runQuery('SELECT * FROM categories ORDER BY id;');
     // },

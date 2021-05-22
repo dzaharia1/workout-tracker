@@ -14,7 +14,11 @@
         <% for (let routine of routines) { %>
             <li class="menu__routine" data-id="<%= routine.routine_id %>" data-order="<%= routine.routine_order %>">
                 <p><%= routine.routine_name %></p>
-                <aside class="menu__routine-completed"><%= routine.to_char %></aside>
+                <% if (routine.routine_id === nextRoutine.routine_id) { %>
+                    <aside class="menu__routine-completed--oldest">Up Next</aside>
+                <% } else { %>
+                    <aside class="menu__routine-completed"><%= routine.to_char %></aside>
+                <% } %>
                 <button class="menu__routine-drag-handle"></button>
             </li>
         <% } %>

@@ -2,6 +2,7 @@
     @extend %horizontal-center;
     width: 100%;
     padding: 16px 16px 8px;
+    position: fixed;
 
     &__menu-button {
         width: 24px;

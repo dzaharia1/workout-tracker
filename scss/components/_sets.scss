@@ -1,0 +1,95 @@
+.set {
+    margin-bottom: 32px;
+
+    &__list {
+        @extend %vertical-start;
+        width: 100%;
+        padding: 56px 16px;
+    }
+
+    &__title {
+        @extend %body;
+        margin-bottom: 12px;
+    }
+}
+
+.movement {
+    width: 207px;
+    background-color: $slate5;
+    color: $white;
+    padding: 12px;
+    margin-right: 8px;
+    flex-shrink: 0;
+
+    &__thing {
+        @extend %caption;
+        margin: 5px 0;
+    }
+
+    &__list {
+        @extend %horizontal-center;
+        width: calc(100vw - 32px);
+        overflow-x: scroll;
+    }
+
+    &__header {
+        @extend %horizontal-center;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    &__name {
+        @extend %body--strong;
+        flex: 1;
+        color: white;
+    }
+
+    &__journal-button {
+        width: 24px;
+        height: 24px;
+        background-image: url('/img/journal--white.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    &__properties {
+        @extend %horizontal-center;
+        justify-content: space-between;
+    }
+
+    &__property {
+        @extend %vertical-center;
+        flex-direction: column-reverse;
+        width: 57px;
+
+        p {
+            @extend %title-1;
+            margin: 0 0 4px 0;
+        }
+
+        h4 {
+            @extend %body;
+        }
+
+        &-divider {
+            width: 1px;
+            height: 28px;
+            background-color: $slate3;
+        }
+    }
+
+    &__add {
+        @extend %vertical-end;
+        @extend %body--strong;
+        justify-content: flex-end;
+        color: $slate5;
+        width: 135px;
+        height: 130px;
+        border: 2px $slate5 solid;
+        padding: 12px;
+
+        background-image: url('/img/add.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}

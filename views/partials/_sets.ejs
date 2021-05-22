@@ -1,0 +1,42 @@
+<ul class="set__list">
+    <% for (let i = 0; i < numSets; i ++) { %>
+        <li class="set" data-setid="<%= i + 1 %>">
+            <h1 class="set__title">Superset <%= i + 1 %></h1>
+            <ul class="movement__list">
+                <% for (movement of movements) {
+                    if (movement.set_id === i + 1) { %>
+                        <li class="movement">
+                            <div class="movement__header">
+                                <h3 class="movement__name"><%= movement.movement_name %></h3>
+                                <button class="movement__journal-button"></button>
+                            </div>
+                            <p class="movement__thing">Last:</p>
+                            <div class="movement__properties">
+                                <div class="movement__property">
+                                    <h4>lbs</h4>
+                                    <p><%= movement.weight %></p>
+                                </div>
+                                <div class="movement__property-divider"></div>
+                                <div class="movement__property">
+                                    <h4>sets</h4>
+                                    <p><%= movement.num_sets %></p>
+                                </div>
+                                <div class="movement__property-divider"></div>
+                                <div class="movement__property">
+                                    <h4>reps</h4>
+                                    <p><%= movement.num_reps %></p>
+                                </div>
+                            </div>
+                        </li>
+                    <% }
+                } %>
+                <li class="movement__add">
+                    <button class="movement__add-button">
+                        <img src="" alt="">
+                        Add a movement
+                    </button>
+                </li>
+            </ul>
+        </li>
+    <% } %>
+</ul>

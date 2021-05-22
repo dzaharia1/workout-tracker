@@ -34,6 +34,9 @@ module.exports = {
     getRoutines: async () => {
         return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines ORDER BY routine_order;`);
     },
+    getRoutine: async (routineId) => {
+        return await runQuery(`SELECT * FROM routines WHERE routine_id=${routineId};`)
+    },
     getUpNextRoutine: async () => {
         return await runQuery(`SELECT * FROM ROUTINES
         ORDER BY last_logged
@@ -50,9 +53,14 @@ module.exports = {
     changeRoutineOrder: async (categorySlug, order) => {
         // todo
     },
-    getAllMovements: async () => {},
+    getNumSets: async (routineId) => {
+        return await runQuery(`SELECT COUNT(DISTINCT set_id) FROM movements WHERE routine_id=${routineId};`);
+    },
+    getAllMovements: async () => {
+        return await runQuery('SELECT * FROM movements');
+    },
     getRoutineMovements: async (routineId) => {
-        
+        return await runQuery(`SELECT * FROM movements WHERE routine_id=${routineId};`);
     },
     // getCategories: async () => {
     //     return await runQuery('SELECT * FROM categories ORDER BY id;');

@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -20,11 +20,33 @@ app.host = app.set('host', process.env.HOST || localhost);
 app.port = app.set('port', process.env.PORT || localport);
 
 app.get('/', async (req, res) => {
+  res.render('index', await assemblePageData());
+});
+
+app.get('/:routine', async (req, res) => {
+  res.render('index', await assemblePageData(req.params.routine));
+});
+
+async function assemblePageData (routineId) {
   let routines = await getRoutines();
   let nextRoutine = await getUpNextRoutine();
-	res.render('index', { routines: routines,
-                        nextRoutine: nextRoutine[0] });
-});
+  let thisRoutine;
+  if (routineId) {
+    thisRoutine = getRoutines(routineId);
+  } else {
+    thisRoutine = nextRoutine;
+  }
+  let numSets = await getNumSets(thisRoutine[0].routine_id);
+  let movements = await getRoutineMovements(thisRoutine[0].routine_id);
+  
+  return {
+    routines: routines,
+    nextRoutine: nextRoutine[0],
+    thisRoutine: thisRoutine[0],
+    movements: movements,
+    numSets: numSets[0].count
+  }
+}
 
 app.post('/addroutine/:routineName/:routineOrder', async(req, res) => {
   console.log(`Adding ${req.params.routineName} to routines`);

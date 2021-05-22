@@ -1,5 +1,6 @@
 <ul class="set__list">
-    <% for (let i = 0; i < numSets; i ++) { %>
+    <%  if (numSets > 0) {
+        for (let i = 0; i < numSets; i ++) { %>
         <li class="set" data-setid="<%= i + 1 %>">
             <h1 class="set__title">Superset <%= i + 1 %></h1>
             <ul class="movement__list">
@@ -32,7 +33,18 @@
                 } %>
                 <li class="movement__add">
                     <button class="movement__add-button">
-                        <img src="" alt="">
+                        Add a movement
+                    </button>
+                </li>
+            </ul>
+        </li>
+    <% }
+       } else { %>
+        <li class="set">
+            <h1 class="set__title">Superset 1</h1>
+            <ul class="movement__list">
+                <li class="movement__add">
+                    <button class="movement__add-button">
                         Add a movement
                     </button>
                 </li>

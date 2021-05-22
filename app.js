@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -32,11 +32,12 @@ async function assemblePageData (routineId) {
   let nextRoutine = await getUpNextRoutine();
   let thisRoutine;
   if (routineId) {
-    thisRoutine = getRoutines(routineId);
+    thisRoutine = await getRoutineById(routineId);
   } else {
     thisRoutine = nextRoutine;
   }
   let numSets = await getNumSets(thisRoutine[0].routine_id);
+  console.log(numSets[0].count);
   let movements = await getRoutineMovements(thisRoutine[0].routine_id);
   
   return {

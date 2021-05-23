@@ -61,5 +61,12 @@ module.exports = {
     },
     getRoutineMovements: async (routineId) => {
         return await runQuery(`SELECT * FROM movements WHERE routine_id=${routineId};`);
+    },
+    addMovement: async (routineId, setId, movementName, movementWeight, movementSets, movementReps) => {
+        const fixedName = SqlString.escape(movementName);
+        const slug = fixedName.replace(/\s+/g, '').toLowerCase();
+        return await runQuery(`INSERT INTO movements (routine_id, set_id, movement_name, movement_slug, weight, num_sets, num_reps)
+            VALUES (${routineId}, ${setId}, ${fixedName}, ${slug}, ${movementWeight}, ${movementSets}, ${movementReps})
+            RETURNING movement_id;`);
     }
 };

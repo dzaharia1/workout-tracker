@@ -1,4 +1,5 @@
 .set {
+    width: 100%;
     margin-bottom: 32px;
 
     &__list {
@@ -11,6 +12,10 @@
         @extend %body;
         margin-bottom: 12px;
     }
+
+    &__add-new {
+        width: 100%;
+    }
 }
 
 .movement {
@@ -21,6 +26,27 @@
     margin-right: 8px;
     flex-shrink: 0;
 
+    &--add-form {
+        background: none;
+        border: 2px $slate5 solid;
+        color: $slate5;
+        display: none;
+
+        &--visible {
+            display: block;
+        }
+
+        input {
+            width: 48px;
+            border: none;
+            border-bottom: 1px $slate5 solid;
+        }
+
+        .movement__property-divider {
+            background-color: $slate2;
+        }
+    }
+
     &__thing {
         @extend %caption;
         margin: 5px 0;
@@ -28,7 +54,6 @@
 
     &__list {
         @extend %horizontal-center;
-        width: calc(100vw - 32px);
         overflow-x: scroll;
     }
 
@@ -38,10 +63,23 @@
         margin-bottom: 5px;
     }
 
-    &__name {
+    &__name,
+    &__name-field {
         @extend %body--strong;
         flex: 1;
         color: white;
+    }
+
+    &__name-field {
+        color: $slate5;
+    }
+
+    &__save-button {
+        width: 24px;
+        height: 24px;
+        background-image: url('/img/add.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
     }
 
     &__journal-button {
@@ -63,33 +101,45 @@
         width: 57px;
 
         p {
-            @extend %title-1;
+            @extend %title-2;
+            text-align: center;
             margin: 0 0 4px 0;
         }
+        
+        input {
+            @extend %title-2;
+            width: 47px;
+            height: 29px;
+            text-align: center;
+            color: $slate5;
+        }
 
-        h4 {
+        h4,
+        label {
             @extend %body;
+            text-align: center;
         }
 
         &-divider {
             width: 1px;
             height: 28px;
-            background-color: $slate3;
+            background-color: $slate4;
         }
     }
 
     &__add {
-        @extend %vertical-end;
-        @extend %body--strong;
-        justify-content: flex-end;
-        color: $slate5;
-        width: 135px;
-        height: 130px;
-        border: 2px $slate5 solid;
-        padding: 12px;
+        button {
+            @extend %vertical-end;
+            justify-content: flex-end;
+            color: $slate5;
+            width: 135px;
+            height: 118px;
 
-        background-image: url('/img/add.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
+            background-image: url('/img/add.svg');
+            background-size: 45%;
+            background-position-x: center;
+            background-position-y: 7px;
+            background-repeat: no-repeat;
+        }
     }
 }

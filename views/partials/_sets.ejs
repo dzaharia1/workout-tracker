@@ -31,8 +31,31 @@
                         </li>
                     <% }
                 } %>
+                <li class="movement movement--add-form">
+                    <div class="movement__header">
+                        <input type="text" class="movement__name-field" placeholder="Movement name">
+                        <button class="movement__save-button" data-routineid="<%= thisRoutine.routine_id %>" data-setid="<%= i + 1 %>"></button>
+                    </div>
+                    <p class="movement__thing">Properties:</p>
+                    <div class="movement__properties">
+                        <div class="movement__property">
+                            <label for="weight">lbs</label>
+                            <input type="number" name="weight" id="" placehoder="-">
+                        </div>
+                        <div class="movement__property-divider"></div>
+                        <div class="movement__property">
+                            <label for="sets">Sets</label>
+                            <input type="number" name="sets" id="" placehoder="-">
+                        </div>
+                        <div class="movement__property-divider"></div>
+                        <div class="movement__property">
+                            <label for="reps">Reps</label>
+                            <input type="number" name="reps" id="" placehoder="-">
+                        </div>
+                    </div>
+                </li>
                 <li class="movement__add">
-                    <button class="movement__add-button">
+                    <button class="movement__add-new text-button" data-routineid="<%= thisRoutine.routine_id %>" data-setid="<%= i + 1 %>">
                         Add a movement
                     </button>
                 </li>
@@ -44,11 +67,14 @@
             <h1 class="set__title">Superset 1</h1>
             <ul class="movement__list">
                 <li class="movement__add">
-                    <button class="movement__add-button">
+                    <button class="movement__add-new text-button">
                         Add a movement
                     </button>
                 </li>
             </ul>
         </li>
     <% } %>
+    <li class="set">
+        <button class="set__add-new text-button">Add a set</button>
+    </li>
 </ul>

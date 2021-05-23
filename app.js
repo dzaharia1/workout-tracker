@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -49,9 +49,24 @@ async function assemblePageData (routineId) {
   }
 }
 
-app.post('/addroutine/:routineName/:routineOrder', async(req, res) => {
+app.post('/addroutine/:routineName/:routineOrder', async (req, res) => {
   console.log(`Adding ${req.params.routineName} to routines`);
-  addRoutine(req.params.routineName, req.params.routineOrder);
+  addRoutine(
+    req.params.routineName,
+    req.params.routineOrder
+  );
+});
+
+app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
+  console.log(`Adding ${req.params.movementName} to ${req.params.routineid} in ${req.params.setid}`);
+  addMovement(
+    req.params.routineid,
+    req.params.setid,
+    req.params.movementName,
+    req.params.weight,
+    req.params.sets,
+    req.params.reps
+  );
 });
 
 var server = app.listen(app.get('port'), function() {

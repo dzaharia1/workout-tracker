@@ -13,9 +13,18 @@
 }
 
 button {
+	@extend %body--strong;
 	background: none;
 	border: none;
 	border-radius: none;
+
+}
+
+.text-button {
+	@extend %body--strong;
+	border: 2px $slate5 solid;
+	border-bottom-width: 4px;
+	padding: 12px;
 }
 
 a {

@@ -7,7 +7,7 @@ const addRoutineField = document.querySelector('.menu__add-routine>input[type="t
 const addRoutineForm = document.querySelector('.menu__add-routine');
 const routineList = document.querySelector('.menu__routine-list');
 
-var menuFunctionality = function() {
+function menuFunctionality() {
 
 	menuButton.addEventListener('click', (e) => {
 		mainMenu.classList.add('menu--active');

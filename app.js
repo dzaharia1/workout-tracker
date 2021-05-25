@@ -69,6 +69,8 @@ app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', asy
   );
 });
 
+app.post('/addset/:routineid/:setid', async (req, res) => {});
+
 var server = app.listen(app.get('port'), function() {
   app.address = app.get('host') + ':' + server.address().port;
   console.log('Listening at ' + app.address);

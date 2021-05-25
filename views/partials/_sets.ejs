@@ -63,11 +63,11 @@
         </li>
     <% }
        } else { %>
-        <li class="set">
+        <li class="set" data-setid="0">
             <h1 class="set__title">Superset 1</h1>
             <ul class="movement__list">
                 <li class="movement__add">
-                    <button class="movement__add-new text-button">
+                    <button class="movement__add-new text-button" data-routineid="<%= thisRoutine.routine_id %>" data-setid="0">
                         Add a movement
                     </button>
                 </li>

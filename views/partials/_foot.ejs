@@ -14,6 +14,8 @@
         function APIRequest(verb, route, params) {
             let request = new XMLHttpRequest();
             let url = window.location.href;
+            url = `http://${url.split('/', 3)[2]}/`;
+            
             url += `${route}/`;
             for (let i = 2; i < arguments.length; i++) {
                 url += `${arguments[i]}/`;

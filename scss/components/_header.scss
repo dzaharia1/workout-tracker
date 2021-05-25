@@ -3,6 +3,7 @@
     width: 100%;
     padding: 16px 16px 8px;
     position: fixed;
+    background-color: $white;
 
     &__menu-button {
         width: 24px;
@@ -101,8 +102,9 @@
             width: 100%;
         }
 
-        p {
+        a {
             @extend %body--strong;
+            color: $slate5;
             flex: 1;
         }
 

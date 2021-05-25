@@ -13,7 +13,7 @@
     <ul class="menu__routine-list">
         <% for (let routine of routines) { %>
             <li class="menu__routine" data-id="<%= routine.routine_id %>" data-order="<%= routine.routine_order %>">
-                <p><%= routine.routine_name %></p>
+                <a href="/<%= routine.routine_id %>"><%= routine.routine_name %></a>
                 <% if (routine.routine_id === nextRoutine.routine_id) { %>
                     <aside class="menu__routine-completed--oldest">Up Next</aside>
                 <% } else { %>

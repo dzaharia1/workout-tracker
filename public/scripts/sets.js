@@ -48,6 +48,7 @@ function createMovementNode(name, weight, sets, reps) {
         <div class="movement__header">
             <h3 class="movement__name">${name}</h3>
             <button class="movement__journal-button"></button>
+            <button class="movement__journal-button"></button>
         </div>
         <p class="movement__thing">Last:</p>
         <div class="movement__properties">

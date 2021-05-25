@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
   res.render('index', await assemblePageData());
 });
 
-app.get('/:routine', async (req, res) => {
+app.get('/routine/:routine', async (req, res) => {
   res.render('index', await assemblePageData(req.params.routine));
 });
 
@@ -37,7 +37,6 @@ async function assemblePageData (routineId) {
     thisRoutine = nextRoutine;
   }
   let numSets = await getNumSets(thisRoutine[0].routine_id);
-  console.log(numSets[0].count);
   let movements = await getRoutineMovements(thisRoutine[0].routine_id);
   
   return {

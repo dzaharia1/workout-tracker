@@ -173,7 +173,7 @@ function populateMovementJournal (movementId, movementName) {
     overlay.querySelector('.movement-journal__entry-form .movement-journal__name').innerText = movementName;
     overlay.querySelector('.overlay__header h2').innerText = `${movementName} - journal`;
 
-    APIRequest('GET', 'journal/getmovement', movementId).then(movementLog => {
+    APIRequest('GET', 'journal/movement', movementId).then(movementLog => {
         for (let logItem of movementLog) {
             movementJournal.appendChild(createMovementJournalEntryNode(
                 movementName,

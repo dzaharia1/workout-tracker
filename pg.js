@@ -72,8 +72,8 @@ module.exports = {
     changeRoutineOrder: async (categorySlug, order) => {
         // todo
     },
-    getRoutineJournal: (routineId) => {
-
+    getRoutineJournal: async (routineId) => {
+        return await runQuery(`SELECT * FROM journal WHERE routine_id=${routineId}`);
     },
     getNumSets: async (routineId) => {
         return await runQuery(`SELECT COUNT(DISTINCT set_id) FROM movements WHERE routine_id=${routineId};`);

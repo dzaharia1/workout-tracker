@@ -85,10 +85,14 @@ app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', asyn
   )
 });
 
-app.get('/journal/getmovement/:movementid', async (req, res) => {
+app.get('/journal/movement/:movementid', async (req, res) => {
   let movementId = req.params.movementid
   let journal = await getMovementJournal(movementId);
   res.json(journal);
+});
+
+app.get('/journal/routine/:routineid', async (req, res) => {
+  let journal = await getRoutineJournal(req.params.routineid);
 });
 
 var server = app.listen(app.get('port'), function() {

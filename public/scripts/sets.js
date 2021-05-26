@@ -123,11 +123,14 @@ function createSetNode() {
     set.setAttribute('data-setid', setNumber);
 
     set.innerHTML = `
-        <h1 class="set__title">Superset ${setNumber}</h1>
-        <button class="movement__add-new">
-            <img src="/img/add.svg" alt="">
-            Add movement
-        </button>
+        <div class="set__header">
+            <h1 class="set__title">Superset ${setNumber}</h1>
+            <div class="progress-bar"></div>
+            <button class="movement__add-new">
+                <img src="/img/add.svg" alt="">
+                Add movement
+            </button>
+        </div>
         <ul class="movement__list">
         </ul>
     `;

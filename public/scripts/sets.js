@@ -16,6 +16,7 @@ function setsFunctionality() {
             let setid = thisButton.parentNode.parentNode.getAttribute('data-setid');
             form.setAttribute('data-setid', setid);
             form.parentNode.querySelector('h2').innerText = `Add a movement to superset ${setid}`;
+            form.querySelector('.movement__name-field').focus();
         });
     }
 

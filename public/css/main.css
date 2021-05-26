@@ -363,6 +363,8 @@
 .movement-journal {
   width: 100%;
   overflow-y: scroll; }
+  .movement-journal__add-new {
+    margin-bottom: 16px; }
   .movement-journal div:first-child {
     flex: 1; }
   .movement-journal__entry {
@@ -372,6 +374,8 @@
     border-bottom: 2px #2b3438 solid; }
     .movement-journal__entry:last-child {
       border: none; }
+    .movement-journal__entry:first-child {
+      padding-top: 0; }
     .movement-journal__entry div:first-child {
       flex: 1; }
     .movement-journal__entry .text-button {

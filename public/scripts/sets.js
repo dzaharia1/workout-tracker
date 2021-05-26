@@ -30,7 +30,6 @@ function setsFunctionality() {
     for (let thisButton of movementJournalButtons) {
         thisButton.addEventListener('click', () => {
             populateMovementJournal(thisButton.getAttribute('data-movementid'), thisButton.getAttribute('data-movementname'));
-            console.log('ready to show overlay');
             movementJournalOverlay.classList.add('overlay--visible');
         });
     }

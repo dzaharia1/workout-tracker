@@ -1,5 +1,6 @@
 let addMovementButtons = document.querySelectorAll('.movement__add-new');
-let saveMomementButtons = document.querySelectorAll('.movement__save-button');
+let saveMovementButton = document.querySelector('.movement__save-button');
+const addMovementOverlay = document.querySelector('.overlay--add-movement');
 const addSetButton = document.querySelector('.set__add-new');
 const routineId = document.querySelector('.header').getAttribute('data-routineid');
 const movementJournal = document.querySelector('.movement-journal');
@@ -11,17 +12,17 @@ const movementJournalSaveEntrybutton = document.querySelector('.movement-journal
 function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
         thisButton.addEventListener('click', (e) => {
-            let form = thisButton.parentNode.parentNode.querySelector('.movement--add-form');
-            form.classList.add('movement--add-form--visible');
+            addMovementOverlay.classList.add('overlay--visible');
+            document.querySelector('.movement--add-form').setAttribute('set-number', thisButton.parentNode.getAttribute('data-setid'));
         });
     }
-    
-    for (let thisButton of saveMomementButtons) {
-        thisButton.addEventListener('click', () => {
-            console.log('adding movement');
-            saveMovement(thisButton.parentNode.parentNode, thisButton);
-        });
-    }
+
+    saveMovementButton.addEventListener('click', () => {
+        console.log('adding movement');
+        let form = document.querySelector('.movement--add-form');
+        saveMovement(form, form.getAttribute('set-number'));
+        addMovementOverlay.classList.remove('overlay--visible');
+    });
 
     addSetButton.addEventListener('click', () => {
         document.querySelector('.set__list').insertBefore(createSetNode(), addSetButton.parentNode);
@@ -56,17 +57,25 @@ function setsFunctionality() {
     });
 }
 
-function saveMovement(form, saveButton) {
+function saveMovement(form, setId) {
+    let routineId = document.querySelector('.header').getAttribute('data-routineid');
     let movementName = form.querySelector('.movement__name-field').value;
     let movementWeight = form.querySelector('input[name="weight"]').value;
     let movementSets = form.querySelector('input[name="sets"]').value;
     let movementReps = form.querySelector('input[name="reps"]').value;
-    let routineId = saveButton.getAttribute('data-routineid');
-    let setId = saveButton.getAttribute('data-setid');
     let newNode = createMovementNode(movementName, movementWeight, movementSets, movementReps);
     form.parentNode.insertBefore(newNode, form);
     form.classList.remove('movement--add-form--visible');
-    APIRequest('post', 'addmovement', routineId, setId, movementName, movementWeight, movementSets, movementReps);
+    APIRequest('POST', 'addmovement', routineId, setId, movementName, movementWeight, movementSets, movementReps);
+
+    document.querySelector(`.set[data-setid="${setId}"] .movement__list`).appendChild(
+        createMovementNode(
+            movementName,
+            movementWeight,
+            movementSets,
+            movementReps
+        )
+    );
 
     for (let thisField of form.querySelectorAll('input')) {
         thisField.value = '';

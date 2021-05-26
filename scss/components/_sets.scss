@@ -1,4 +1,6 @@
 .set {
+    @extend %horizontal-center;
+    flex-wrap: wrap;
     width: 100%;
     margin-bottom: 32px;
 
@@ -11,6 +13,7 @@
     &__title {
         @extend %body;
         margin-bottom: 12px;
+        flex: 1;
     }
 
     &__add-new {
@@ -26,25 +29,15 @@
     margin-right: 8px;
     flex-shrink: 0;
 
-    &--add-form {
-        background: none;
-        border: 2px $slate5 solid;
-        color: $slate5;
-        display: none;
+    &__add-new {
+        @extend %horizontal-center;
+        @extend %body;
+        margin-bottom: 12px;;
 
-        &--visible {
-            display: block;
-        }
-
-        input {
-            width: 48px;
-            border: none;
-            border-bottom: 1px $slate5 solid;
-            overflow-x: visible;
-        }
-
-        .movement__property-divider {
-            background-color: $slate2;
+        img {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
         }
     }
 
@@ -56,6 +49,7 @@
     &__list {
         @extend %horizontal-center;
         overflow-x: scroll;
+        width: 100%;
     }
 
     &__header {
@@ -73,14 +67,6 @@
 
     &__name-field {
         color: $slate5;
-    }
-
-    &__save-button {
-        width: 24px;
-        height: 24px;
-        background-image: url('/img/add.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
 
     &__journal-button {
@@ -137,20 +123,27 @@
             background-color: $slate4;
         }
     }
+}
 
-    &__add {
-        button {
-            @extend %vertical-end;
-            justify-content: flex-end;
-            color: $slate5;
-            width: 135px;
-            height: 118px;
+.movement--add-form {
+    width: 100%;
+    padding: 0 0 16px 0;
 
-            background-image: url('/img/add.svg');
-            background-size: 45%;
-            background-position-x: center;
-            background-position-y: 7px;
-            background-repeat: no-repeat;
-        }
+    input {
+        background: none;
+        width: 48px;
+        border: none;
+        border-bottom: 1px $slate5 solid;
+        overflow-x: visible;
+        padding: 8px 0;
+        margin-bottom: 8px;
+    }
+
+    & .movement__properties {
+        margin-bottom: 12px;
+    }
+
+    .movement__property-divider {
+        background-color: $slate2;
     }
 }

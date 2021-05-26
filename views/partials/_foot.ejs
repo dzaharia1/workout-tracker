@@ -11,22 +11,22 @@
                 thisFunction();
             }
         }
-        function APIRequest(verb, route, params) {
-            let request = new XMLHttpRequest();
+        async function APIRequest(verb, route, params) {
             let url = window.location.href;
             url = `http://${url.split('/', 3)[2]}/`;
-            
             url += `${route}/`;
             for (let i = 2; i < arguments.length; i++) {
                 url += `${arguments[i]}/`;
             }
             console.log(url);
-            request.open(verb, url, true);
-            request.onload = () => { };
-            request.send();
+
+            let response = await fetch(url, { method: verb });
+            let data = await response.json();
+            return data;
         }
     </script>
     <script src="/scripts/header.js"></script>
     <script src="/scripts/sets.js"></script>
+    <script src="/scripts/overlay.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -68,7 +68,20 @@ app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', asy
   );
 });
 
-app.post('/addset/:routineid/:setid', async (req, res) => {});
+app.post('/journal/addmovement/:movementid/:weight/:sets/:reps', async (req, res) => {
+  addMovementJournalEntry(
+    req.params.movementid,
+    req.params.weight,
+    req.params.sets,
+    req.params.reps
+  )
+});
+
+app.get('/journal/getmovement/:movementid', async (req, res) => {
+  let movementId = req.params.movementid
+  let journal = await getMovementJournal(movementId);
+  res.json(journal);
+});
 
 var server = app.listen(app.get('port'), function() {
   app.address = app.get('host') + ':' + server.address().port;

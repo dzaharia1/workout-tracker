@@ -5,6 +5,8 @@
 @import 'components/header';
 @import 'components/footer';
 @import 'components/sets';
+@import 'components/overlay';
+@import 'components/movement-journal';
 
 * {
 	box-sizing: border-box;
@@ -16,15 +18,16 @@ button {
 	@extend %body--strong;
 	background: none;
 	border: none;
-	border-radius: none;
+	border-radius: 0;
 
 }
 
 .text-button {
 	@extend %body--strong;
+	width: 100%;
+	padding: 12px;
 	border: 2px $slate5 solid;
 	border-bottom-width: 4px;
-	padding: 12px;
 }
 
 a {

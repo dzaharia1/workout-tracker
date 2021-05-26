@@ -1,0 +1,95 @@
+.movement-journal {
+    width: 100%;
+    overflow-y: scroll;
+    // height: 100%;
+
+    div:first-child {
+        flex: 1;
+    }
+
+    &__entry {
+        @extend %horizontal-start;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 18px 0;
+        border-bottom: 2px $slate5 solid;
+
+        &:last-child {
+            border: none;
+        }
+
+        div:first-child {
+            flex: 1;
+        }
+
+        .text-button {
+            margin-top: 16px;
+        }
+
+        &-form {
+            display: none;
+            width: 100%;
+
+            &--visible {
+                display: flex;
+            }
+
+            .movement-journal__property:first-child {
+                border: none;
+            }
+        }
+    }
+
+    &__date {
+        @extend %caption;
+        margin-bottom: 4px;
+    }
+
+    &__name {
+        @extend %body--strong;
+    }
+
+    &__property {
+        @extend %vertical-center;
+        flex-direction: column-reverse;
+        width: 41px;
+        border-left: 1px $slate3 solid;
+
+        &:first-child {
+            border: none;
+        }
+
+        h4,
+        p,
+        input {
+            color: $slate5;
+        }
+
+        h4,
+        label {
+            @extend %caption;
+        }
+
+        p,
+        input {
+            @extend %body--strong;
+            width: 80%;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        input {
+            border: none;
+            border-bottom: 1px $slate5 solid;
+            background: none;
+        }
+
+        &--increase p {
+            color: $green;
+        }
+
+        &--decrease p {
+            color: $red;
+        }
+    }
+}

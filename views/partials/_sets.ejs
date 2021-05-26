@@ -10,7 +10,7 @@
                             <div class="movement__header">
                                 <h3 class="movement__name"><%= movement.movement_name %></h3>
                                 <button class="movement__edit-button"></button>
-                                <button class="movement__journal-button"></button>
+                                <button class="movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
                             </div>
                             <p class="movement__thing">Last:</p>
                             <div class="movement__properties">
@@ -70,7 +70,7 @@
                 <li class="movement movement--add-form">
                     <div class="movement__header">
                         <input type="text" class="movement__name-field" placeholder="Movement name">
-                        <button class="movement__save-button" data-routineid="<%= thisRoutine.routine_id %>" data-setid="0"></button>
+                        <button class="movement__save-button" data-routineid="<%= thisRoutine.routine_id %>" data-setid="1"></button>
                     </div>
                     <p class="movement__thing">Properties:</p>
                     <div class="movement__properties">

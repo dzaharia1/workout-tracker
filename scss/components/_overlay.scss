@@ -1,0 +1,48 @@
+.overlay {
+    @extend %vertical-start;
+    position: fixed;
+    bottom: -50vh;
+    left: 0;
+    width: 100vw;
+    max-height: 70vh;
+
+    padding: 24px 16px 0;
+    box-shadow: 0 -2px 16px transparentize($slate5, .2);
+
+    background-color: transparentize($white, .9);
+    opacity: 0;
+    backdrop-filter: blur(2px);
+    transition: .5s bottom cubic-bezier(0.25, 0.9, 0.21, 1),
+                .5s opacity cubic-bezier(0.25, 0.9, 0.21, 1);
+    
+    &--visible {
+        opacity: 1;
+        bottom: 0;
+    }
+
+    &__header {
+        @extend %horizontal-center;
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 12px;
+
+        h2 {
+            @extend %body--strong;
+            flex: 1;
+        }
+    }
+
+    &__header-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+
+    &__close-button {
+        width: 24px;
+        height: 24px;
+        background-image: url('/img/close.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+}

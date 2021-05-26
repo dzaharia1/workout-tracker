@@ -2,7 +2,6 @@ let addMovementButtons = document.querySelectorAll('.movement__add-new');
 let saveMovementButton = document.querySelector('.movement__save-button');
 const addMovementOverlay = document.querySelector('.overlay--add-movement');
 const addSetButton = document.querySelector('.set__add-new');
-const routineId = document.querySelector('.header').getAttribute('data-routineid');
 const movementJournal = document.querySelector('.movement-journal');
 const movementJournalButtons = document.querySelectorAll('.movement__journal-button');
 const movementJournalOverlay = document.querySelector('.overlay--movement-journal');
@@ -13,7 +12,10 @@ function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
         thisButton.addEventListener('click', (e) => {
             addMovementOverlay.classList.add('overlay--visible');
-            document.querySelector('.movement--add-form').setAttribute('set-number', thisButton.parentNode.getAttribute('data-setid'));
+            let form = document.querySelector('.movement--add-form');
+            let set = thisButton.parentNode.parentNode.getAttribute('data-setid');
+            form.setAttribute('set-number', set);
+            form.parentNode.querySelector('h2').innerText = `Add a movement to superset ${set}`;
         });
     }
 
@@ -37,6 +39,7 @@ function setsFunctionality() {
 
     movementJournalAddEntryButton.addEventListener('click', () => {
         document.querySelector('.movement-journal__entry-form').classList.add('movement-journal__entry-form--visible');
+        movementJournalAddEntryButton.style.display = 'none';
     });
 
     movementJournalSaveEntrybutton.addEventListener('click', () => {
@@ -48,12 +51,13 @@ function setsFunctionality() {
         const weight = form.querySelector('input[name="weight"]').value;
         const sets = form.querySelector('input[name="sets"]').value;
         const reps = form.querySelector('input[name="reps"]').value;
-        const date = (new Date()).toLocaleDateString('en-US');
+        const date = movementJournalSaveEntrybutton.getAttribute('data-date');
 
         movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
-        APIRequest('POST', 'journal/addmovement', movementId, weight, sets, reps);
+        APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps);
 
         form.classList.remove('movement-journal__entry-form--visible');
+        movementJournalAddEntryButton.style.display = 'block';
     });
 }
 

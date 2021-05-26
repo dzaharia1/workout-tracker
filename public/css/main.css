@@ -4,29 +4,29 @@
   flex-direction: row;
   align-items: flex-start; }
 
-.header, .menu__header, .menu__routine, .menu__routine--new, .menu__create-routine, .menu__add-routine, .routine__add-to-log, .set, .movement__add-new, .movement__list, .movement__header, .movement__properties, .overlay__header {
+.menu__header, .menu__routine, .menu__routine--new, .menu__create-routine, .menu__add-routine, .routine__add-to-log, .set__header, .movement__add-new, .movement__list, .movement__header, .movement__properties, .overlay__header, .progress-bar {
   display: flex;
   flex-direction: row;
   align-items: center; }
 
-.footer {
+.header, .footer {
   display: flex;
   flex-direction: row;
   align-items: flex-end; }
 
-.menu, .routine__progress-bar, .set__list, .overlay {
+.menu, .routine__progress-bar, .set, .set__list, .overlay {
   display: flex;
   flex-direction: column;
   align-items: flex-start; }
 
-.movement__property, .movement-journal__property {
+.header__heading, .movement__property, .movement-journal__property {
   display: flex;
   flex-direction: column;
   align-items: center; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
-.movement-journal__property input, button, .text-button, .routine__progress p, .set__title, .movement__add-new, .movement__property h4,
-.movement__property label, body, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.movement-journal__property input, button, .text-button, .routine__progress p, .movement__add-new, .movement__property h4,
+.movement__property label, body, .header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
 .movement-journal__property label {
   font-family: "Montserrat", helvetica, sans-serif;
   font-weight: normal; }
@@ -49,39 +49,57 @@
   line-height: 22px;
   letter-spacing: .04em; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
-.movement-journal__property input, button, .text-button, .routine__progress p, .set__title, .movement__add-new, .movement__property h4,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.movement-journal__property input, button, .text-button, .routine__progress p, .movement__add-new, .movement__property h4,
 .movement__property label, body {
   font-size: 12px;
   line-height: 15px;
   letter-spacing: .02em; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
 .movement-journal__property input, button, .text-button {
   font-weight: 600; }
 
-.routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
 .movement-journal__property label {
   font-size: 10px;
   line-height: 12px; }
 
-.routine__add-to-log {
+.header__journal-button--complete, .routine__add-to-log {
   font-weight: 600; }
 
 .header {
   width: 100%;
-  padding: 16px 16px 8px;
+  padding: 16px 16px 12px;
   position: fixed;
-  background-color: #ffffff; }
+  background-color: #ffffff;
+  box-shadow: 0 2px 16px rgba(43, 52, 56, 0.2); }
+  .header__heading {
+    flex: 1; }
   .header__menu-button {
     width: 24px;
     height: 24px;
     background-image: url("/img/menu.svg");
     background-size: contain;
-    background-repeat: no-repeat; }
+    background-repeat: no-repeat;
+    flex: 1; }
   .header__title {
     flex: 1;
-    text-align: center; }
+    text-align: center;
+    margin-bottom: 4px; }
+  .header__journal-button {
+    display: flex;
+    justify-content: flex-end; }
+    .header__journal-button--complete {
+      background-color: #00a775;
+      color: #ffffff;
+      padding: 6px 8px;
+      border-radius: 4px;
+      margin-left: 12px; }
+    .header__journal-button-container {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1; }
 
 .menu {
   position: fixed;
@@ -217,31 +235,36 @@
     margin-top: 2px; }
 
 .set {
-  flex-wrap: wrap;
   width: 100%;
   margin-bottom: 32px; }
+  .set:first-child .set__header {
+    padding-top: 0;
+    border: none; }
+  .set__header {
+    width: 100%;
+    padding: 16px 0;
+    border-top: 1px rgba(43, 52, 56, 0.5) solid; }
   .set__list {
     width: 100%;
-    padding: 56px 16px; }
+    padding: 88px 16px 0; }
   .set__title {
-    margin-bottom: 12px;
-    flex: 1; }
+    margin-right: 12px; }
   .set__add-new {
     width: 100%; }
+  .set .progress-bar {
+    flex: 1; }
 
 .movement {
-  width: 207px;
+  width: 228px;
   background-color: #2b3438;
   color: #ffffff;
   padding: 12px;
   margin-right: 8px;
   flex-shrink: 0; }
-  .movement__add-new {
-    margin-bottom: 12px; }
-    .movement__add-new img {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px; }
+  .movement__add-new img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px; }
   .movement__thing {
     margin: 5px 0; }
   .movement__list {
@@ -313,7 +336,7 @@
   max-height: 70vh;
   padding: 24px 16px 0;
   box-shadow: 0 -2px 16px rgba(43, 52, 56, 0.2);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.92);
   opacity: 0;
   backdrop-filter: blur(2px);
   transition: 0.5s bottom cubic-bezier(0.25, 0.9, 0.21, 1), 0.5s opacity cubic-bezier(0.25, 0.9, 0.21, 1); }
@@ -385,6 +408,18 @@
       color: #00a775; }
     .movement-journal__property--decrease p {
       color: #dc183b; }
+
+.progress-step--upcoming, .progress-step--completed {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px #2b3438 solid;
+  margin-right: 4px; }
+  .progress-step--upcoming:last-child, .progress-step--completed:last-child {
+    margin: 0; }
+
+.progress-step--completed {
+  background: #2b3438; }
 
 * {
   box-sizing: border-box;

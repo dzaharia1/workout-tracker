@@ -1,28 +1,43 @@
 .set {
-    @extend %horizontal-center;
-    flex-wrap: wrap;
+    @extend %vertical-start;
     width: 100%;
     margin-bottom: 32px;
+
+    &:first-child .set__header {
+        padding-top: 0;
+        border: none;
+    }
+
+    &__header {
+        @extend %horizontal-center;
+        width: 100%;
+        padding: 16px 0;
+        border-top: 1px transparentize($slate5, .5) solid;
+        // margin-bottom: 12px;
+    }
 
     &__list {
         @extend %vertical-start;
         width: 100%;
-        padding: 56px 16px;
+        padding: 88px 16px 0;
     }
 
     &__title {
-        @extend %body;
-        margin-bottom: 12px;
-        flex: 1;
+        @extend %body--strong;
+        margin-right: 12px;
     }
 
     &__add-new {
         width: 100%;
     }
+
+    .progress-bar {
+        flex: 1;
+    }
 }
 
 .movement {
-    width: 207px;
+    width: 228px;
     background-color: $slate5;
     color: $white;
     padding: 12px;
@@ -32,7 +47,6 @@
     &__add-new {
         @extend %horizontal-center;
         @extend %body;
-        margin-bottom: 12px;;
 
         img {
             width: 16px;

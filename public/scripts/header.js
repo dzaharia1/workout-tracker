@@ -35,7 +35,7 @@ function menuFunctionality() {
 
 function addRoutine() {
 	let orderFigure = document.querySelectorAll('.menu__routine').length;
-	APIRequest('post', '/addroutine', addRoutineField.value, orderFigure);
+	APIRequest('post', 'addroutine', addRoutineField.value, orderFigure);
 
 	let listItem = document.createElement('li');
 	listItem.classList.add('menu__routine');

@@ -1,9 +1,15 @@
 .header {
-    @extend %horizontal-center;
+    @extend %horizontal-end;
     width: 100%;
-    padding: 16px 16px 8px;
+    padding: 16px 16px 12px;
     position: fixed;
     background-color: $white;
+    box-shadow: 0 2px 16px transparentize($slate5, .2);
+
+    &__heading {
+        @extend %vertical-center;
+        flex: 1
+    }
 
     &__menu-button {
         width: 24px;
@@ -11,16 +17,35 @@
         background-image: url('/img/menu.svg');
         background-size: contain;
         background-repeat: no-repeat;
+        flex: 1;
     }
 
     &__title {
         @extend %subtitle;
         flex: 1;
         text-align: center;
+        margin-bottom: 4px;
     }
 
     &__journal-button {
         @extend %caption;
+        display: flex;
+        justify-content: flex-end;
+        
+        &--complete {
+            @extend %caption--strong;
+            background-color: $green;
+            color: $white;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-left: 12px;
+        }
+
+        &-container {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
     }
 }
 

@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -38,22 +38,29 @@ async function assemblePageData (routineId) {
   }
   let numSets = await getNumSets(thisRoutine[0].routine_id);
   let movements = await getRoutineMovements(thisRoutine[0].routine_id);
+  let todaysDate = await getTodaysDate();
   
   return {
     routines: routines,
     nextRoutine: nextRoutine[0],
     thisRoutine: thisRoutine[0],
     movements: movements,
-    numSets: numSets[0].count
+    numSets: numSets[0].count,
+    todaysDate: todaysDate
   }
 }
 
-app.post('/addroutine/:routineName/:routineOrder', async (req, res) => {
+app.post('/routine/add/:routineName/:routineOrder', async (req, res) => {
   console.log(`Adding ${req.params.routineName} to routines`);
   addRoutine(
     req.params.routineName,
     req.params.routineOrder
   );
+});
+
+app.put('/routine/markComplete/:routineId', async (req, res) => {
+  console.log(`marking routine ${req.params.routineId} complete`);
+  markRoutineComplete(req.params.routineId);
 });
 
 app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
@@ -68,8 +75,9 @@ app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', asy
   );
 });
 
-app.post('/journal/addmovement/:movementid/:weight/:sets/:reps', async (req, res) => {
+app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', async (req, res) => {
   addMovementJournalEntry(
+    req.params.routineid,
     req.params.movementid,
     req.params.weight,
     req.params.sets,
@@ -77,10 +85,14 @@ app.post('/journal/addmovement/:movementid/:weight/:sets/:reps', async (req, res
   )
 });
 
-app.get('/journal/getmovement/:movementid', async (req, res) => {
+app.get('/journal/movement/:movementid', async (req, res) => {
   let movementId = req.params.movementid
   let journal = await getMovementJournal(movementId);
   res.json(journal);
+});
+
+app.get('/journal/routine/:routineid', async (req, res) => {
+  let journal = await getRoutineJournal(req.params.routineid);
 });
 
 var server = app.listen(app.get('port'), function() {

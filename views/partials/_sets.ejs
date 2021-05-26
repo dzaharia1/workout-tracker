@@ -2,12 +2,25 @@
     <%  if (numSets > 0) {
         for (let i = 0; i < numSets; i ++) { %>
         <li class="set" data-setid="<%= i + 1 %>">
-            <h1 class="set__title">Superset <%= i + 1 %></h1>
-            <button class="movement__add-new">
-                <img src="/img/add.svg" alt="">
-                Add movement
-            </button>
-            <ul class="movement__list">
+            <div class="set__header">
+                <h1 class="set__title">Superset <%= i + 1 %></h1>
+                <div class="progress-bar">
+                    <% for (let movement of movements) { %>
+                        <% if (movement.set_id === i + 1) { %>
+                            <% if (movement.to_char === todaysDate) { %>
+                                <div class="progress-step--completed"></div>
+                            <% } else { %>
+                                <div class="progress-step--upcoming"></div>
+                            <%} %>
+                        <% } %>
+                    <% } %>
+                </div>
+                <button class="movement__add-new">
+                    <img src="/img/add.svg" alt="">
+                    Add a movement
+                </button>
+            </div>
+            <ul class="movement__list" data-setid="<%= i + 1 %>">
                 <% for (movement of movements) {
                     if (movement.set_id === i + 1) { %>
                         <li class="movement">
@@ -16,7 +29,7 @@
                                 <button class="movement__edit-button"></button>
                                 <button class="movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
                             </div>
-                            <p class="movement__thing">Last:</p>
+                            <p class="movement__thing">Last (<%= movement.to_char %>):</p>
                             <div class="movement__properties">
                                 <div class="movement__property">
                                     <h4>lbs</h4>
@@ -41,15 +54,18 @@
     <% }
        } else { %>
         <li class="set" data-setid="1">
-            <h1 class="set__title">Superset 1</h1>
-            <button class="movement__add-new">
-                <img src="/img/add.svg" alt="">
-                Add movement
-            </button>
-            <ul class="movement__list"></ul>
+            <div class="set__header">
+                <h1 class="set__title">Superset 1</h1>
+                <div class="progress-bar"></div>
+                <button class="movement__add-new">
+                    <img src="/img/add.svg" alt="">
+                    Add a movement
+                </button>
+            </div>
+            <ul class="movement__list" data-setid="1"></ul>
         </li>
     <% } %>
     <li class="set">
-        <button class="set__add-new text-button">Add a set</button>
+        <button class="set__add-new text-button">Add a superset</button>
     </li>
 </ul>

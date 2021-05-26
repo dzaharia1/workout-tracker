@@ -1,0 +1,22 @@
+.progress {
+    &-bar {
+        @extend %horizontal-center;
+    }
+
+    &-step--upcoming,
+    &-step--completed {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px $slate5 solid;
+        margin-right: 4px;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
+
+    &-step--completed {
+        background: $slate5;
+    }
+}

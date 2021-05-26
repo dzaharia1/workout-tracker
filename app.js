@@ -8,7 +8,7 @@ const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovemen
 const app = express();
 
 const localport = '3333';
-const localhost = 'http://localhost';
+const localhost = 'https://localhost';
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -84,15 +84,18 @@ app.get('/journal/getmovement/:movementid', async (req, res) => {
   res.json(journal);
 });
 
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-}, app)
-.listen(app.get('port'), function () {
-  app.address = `${app.get('host')}:${app.get('port')}`;
-  console.log(`Listening at  + ${app.address}`);
-})
-// var server = app.listen(app.get('port'), function() {
-//   app.address = app.get('host') + ':' + server.address().port;
-//   console.log('Listening at ' + app.address);
-// });
+if (process.env.ENVIRONMENT === 'PROD' || process.env.ENVIRONMENT === 'LOCAL') {
+  https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app)
+  .listen(app.get('port'), function () {
+    app.address = `${app.get('host')}:${app.get('port')}`;
+    console.log(`Listening at ${app.address}`);
+  })
+} else {
+  var server = app.listen(app.get('port'), function() {
+    app.address = app.get('host') + ':' + app.get('port');
+    console.log('Listening at ' + app.address);
+  });
+}

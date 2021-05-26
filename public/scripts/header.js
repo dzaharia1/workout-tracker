@@ -47,7 +47,7 @@ function menuFunctionality() {
 
 function addRoutine() {
 	let orderFigure = document.querySelectorAll('.menu__routine').length;
-	APIRequest('post', 'addroutine', addRoutineField.value, orderFigure);
+	APIRequest('post', 'routine/add', addRoutineField.value, orderFigure);
 
 	let listItem = document.createElement('li');
 	listItem.classList.add('menu__routine');
@@ -58,19 +58,6 @@ function addRoutine() {
 		<aside class="menu__routine-completed">-</aside>
 		<button class="menu__routine-drag-handle"></button>
 	`;
-
-	// let routineName = document.createElement('p');
-	// routineName.innerText = addRoutineField.value;
-	// listItem.appendChild(routineName);
-
-	// let dateCompleted = document.createElement('aside');
-	// dateCompleted.classList.add('menu__routine-completed');
-	// dateCompleted.innerText = '-';
-	// listItem.appendChild(dateCompleted);
-
-	// let dragHandle = document.createElement('button');
-	// dragHandle.classList.add('menu__routine-drag-handle');
-	// listItem.appendChild(dragHandle);
 
 	routineList.insertBefore(listItem, addRoutineForm);
 	addRoutineForm.classList.remove('menu__add-routine--visible');

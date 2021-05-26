@@ -63,8 +63,6 @@ function saveMovement(form, setId) {
     let movementWeight = form.querySelector('input[name="weight"]').value;
     let movementSets = form.querySelector('input[name="sets"]').value;
     let movementReps = form.querySelector('input[name="reps"]').value;
-    let newNode = createMovementNode(movementName, movementWeight, movementSets, movementReps);
-    form.parentNode.insertBefore(newNode, form);
     form.classList.remove('movement--add-form--visible');
     APIRequest('POST', 'addmovement', routineId, setId, movementName, movementWeight, movementSets, movementReps);
 

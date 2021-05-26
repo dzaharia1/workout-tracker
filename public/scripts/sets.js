@@ -132,7 +132,7 @@ function createSetNode() {
 
     set.querySelector('.movement__add-new').addEventListener('click', () => {
         addMovementOverlay.classList.add('overlay--visible');
-        document.querySelector('.movement--add-form').setAttribute('set-number', this.parentNode.getAttribute('data-setid'));
+        document.querySelector('.movement--add-form').setAttribute('set-number', set.querySelector('.movement__add-new').parentNode.getAttribute('data-setid'));
     });
 
     return set;

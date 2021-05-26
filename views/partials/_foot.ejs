@@ -14,6 +14,9 @@
         async function APIRequest(verb, route, params) {
             let url = window.location.href;
             url = `https://${url.split('/', 3)[2]}/`;
+            if (url.indexOf('localhost') >= 0) {
+                url = `http://${url.split('/', 3)[2]}/`;
+            }
             url += `${route}/`;
             for (let i = 2; i < arguments.length; i++) {
                 url += `${arguments[i]}/`;

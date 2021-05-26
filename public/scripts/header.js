@@ -41,18 +41,24 @@ function addRoutine() {
 	listItem.classList.add('menu__routine');
 	listItem.setAttribute('data-order', orderFigure);
 
-	let routineName = document.createElement('p');
-	routineName.innerText = addRoutineField.value;
-	listItem.appendChild(routineName);
+	listItem.innerHTML = `
+		<a href="">${addRoutineField.value}</a>
+		<aside class="menu__routine-completed">-</aside>
+		<button class="menu__routine-drag-handle"></button>
+	`;
 
-	let dateCompleted = document.createElement('aside');
-	dateCompleted.classList.add('menu__routine-completed');
-	dateCompleted.innerText = '-';
-	listItem.appendChild(dateCompleted);
+	// let routineName = document.createElement('p');
+	// routineName.innerText = addRoutineField.value;
+	// listItem.appendChild(routineName);
 
-	let dragHandle = document.createElement('button');
-	dragHandle.classList.add('menu__routine-drag-handle');
-	listItem.appendChild(dragHandle);
+	// let dateCompleted = document.createElement('aside');
+	// dateCompleted.classList.add('menu__routine-completed');
+	// dateCompleted.innerText = '-';
+	// listItem.appendChild(dateCompleted);
+
+	// let dragHandle = document.createElement('button');
+	// dragHandle.classList.add('menu__routine-drag-handle');
+	// listItem.appendChild(dragHandle);
 
 	routineList.insertBefore(listItem, addRoutineForm);
 	addRoutineForm.classList.remove('menu__add-routine--visible');

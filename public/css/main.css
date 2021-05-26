@@ -1,0 +1,418 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+.movement-journal__entry {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; }
+
+.header, .menu__header, .menu__routine, .menu__routine--new, .menu__create-routine, .menu__add-routine, .routine__add-to-log, .set, .movement__add-new, .movement__list, .movement__header, .movement__properties, .overlay__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end; }
+
+.menu, .routine__progress-bar, .set__list, .overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+
+.movement__property, .movement-journal__property {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.movement-journal__property input, button, .text-button, .routine__progress p, .set__title, .movement__add-new, .movement__property h4,
+.movement__property label, body, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.movement-journal__property label {
+  font-family: "Montserrat", helvetica, sans-serif;
+  font-weight: normal; }
+
+.header__title, .menu__title {
+  font-family: "Montserrat", helvetica, sans-serif;
+  font-weight: 600; }
+
+.movement__property p, .movement__property input {
+  font-family: "Montserrat", helvetica, sans-serif;
+  font-weight: 700; }
+
+.movement__property p, .movement__property input {
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: .04em; }
+
+.header__title, .menu__title {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: .04em; }
+
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.movement-journal__property input, button, .text-button, .routine__progress p, .set__title, .movement__add-new, .movement__property h4,
+.movement__property label, body {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: .02em; }
+
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .movement__name, .movement__name-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.movement-journal__property input, button, .text-button {
+  font-weight: 600; }
+
+.routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.movement-journal__property label {
+  font-size: 10px;
+  line-height: 12px; }
+
+.routine__add-to-log {
+  font-weight: 600; }
+
+.header {
+  width: 100%;
+  padding: 16px 16px 8px;
+  position: fixed;
+  background-color: #ffffff; }
+  .header__menu-button {
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/menu.svg");
+    background-size: contain;
+    background-repeat: no-repeat; }
+  .header__title {
+    flex: 1;
+    text-align: center; }
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: -100vw;
+  width: 100vw;
+  height: 100vh;
+  width: 100%;
+  padding: 16px 16px 0px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  backdrop-filter: blur(2px);
+  transition: 0.5s left cubic-bezier(0.25, 0.9, 0.21, 1), 0.5s opacity cubic-bezier(0.25, 0.9, 0.21, 1); }
+  .menu--active {
+    opacity: 1;
+    left: 0; }
+  .menu__header, .menu__routine-list, .menu__create-routine {
+    z-index: 10; }
+  .menu__header {
+    width: 100%;
+    margin-bottom: 24px;
+    z-index: 1000; }
+    .menu__header .header__title {
+      flex: 1;
+      text-align: left; }
+  .menu__close {
+    margin-right: 16px; }
+  .menu__close {
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/back.svg"); }
+  .menu__routine {
+    width: 100%;
+    margin-bottom: 24px; }
+    .menu__routine--new {
+      justify-content: center;
+      width: 100%; }
+      .menu__routine--new img {
+        margin-right: 12px; }
+      .menu__routine--new p {
+        text-align: left;
+        flex-grow: unset; }
+    .menu__routine-list {
+      width: 100%; }
+    .menu__routine a {
+      color: #2b3438;
+      flex: 1; }
+    .menu__routine-completed--oldest {
+      padding: 3px 12px;
+      background-color: #00a775;
+      border-radius: 4px;
+      margin: -3px 0;
+      color: #ffffff; }
+    .menu__routine-drag-handle {
+      width: 16px;
+      height: 16px;
+      background-image: url("/img/menu.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-left: 16px; }
+  .menu__create-routine {
+    justify-content: center;
+    position: relative;
+    left: -16px;
+    width: calc(100vw - 32px);
+    padding: 12px;
+    border: 2px #2b3438 solid;
+    margin: 16px; }
+    .menu__create-routine img {
+      margin-right: 12px; }
+  .menu__add-routine {
+    display: none;
+    width: 100%;
+    border-bottom: 2px #2b3438 solid;
+    padding: 8px; }
+    .menu__add-routine--visible {
+      display: flex; }
+    .menu__add-routine input {
+      flex: 1;
+      border: none;
+      color: #2b3438; }
+      .menu__add-routine input::focus {
+        border: 2px #49585e solid; }
+    .menu__add-routine button {
+      width: 24px;
+      height: 24px;
+      background-image: url(/img/add.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin-left: 12px; }
+      .menu__add-routine button.menu__cancel-add {
+        transform: rotate(45deg); }
+
+.footer {
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2b3438;
+  color: #ffffff;
+  padding: 8px 16px; }
+
+.routine__progress p {
+  margin-bottom: 4px; }
+
+.routine__progress-bar {
+  flex-wrap: wrap;
+  height: 35px; }
+
+.routine__progress-step--upcoming, .routine__progress-step--complete {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin: 0px 3px 3px 0px; }
+  .routine__progress-step--upcoming:nth-child(even), .routine__progress-step--complete:nth-child(even) {
+    margin-bottom: 0; }
+
+.routine__progress-step--complete {
+  background-color: #ffffff; }
+
+.routine__progress-step--upcoming {
+  border: 3px #ffffff solid; }
+
+.routine__add-to-log {
+  padding: 8px 18px;
+  color: #ffffff;
+  border: 3px #ffffff solid;
+  margin-bottom: 8px; }
+  .routine__add-to-log div {
+    margin-right: 8px;
+    margin-top: 2px; }
+
+.set {
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 32px; }
+  .set__list {
+    width: 100%;
+    padding: 56px 16px; }
+  .set__title {
+    margin-bottom: 12px;
+    flex: 1; }
+  .set__add-new {
+    width: 100%; }
+
+.movement {
+  width: 207px;
+  background-color: #2b3438;
+  color: #ffffff;
+  padding: 12px;
+  margin-right: 8px;
+  flex-shrink: 0; }
+  .movement__add-new {
+    margin-bottom: 12px; }
+    .movement__add-new img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px; }
+  .movement__thing {
+    margin: 5px 0; }
+  .movement__list {
+    overflow-x: scroll;
+    width: 100%; }
+  .movement__header {
+    width: 100%;
+    margin-bottom: 5px; }
+  .movement__name, .movement__name-field {
+    flex: 1;
+    color: white; }
+  .movement__name-field {
+    color: #2b3438; }
+  .movement__journal-button {
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/journal--white.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px; }
+  .movement__edit-button {
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/edit--white.svg");
+    background-size: contain;
+    background-repeat: no-repeat; }
+  .movement__properties {
+    justify-content: space-between; }
+  .movement__property {
+    flex-direction: column-reverse;
+    width: 57px; }
+    .movement__property p {
+      text-align: center;
+      margin: 0 0 4px 0; }
+    .movement__property input {
+      width: 47px;
+      height: 29px;
+      text-align: center;
+      color: #2b3438; }
+    .movement__property h4,
+    .movement__property label {
+      text-align: center; }
+    .movement__property-divider {
+      width: 1px;
+      height: 28px;
+      background-color: #3f4c52; }
+
+.movement--add-form {
+  width: 100%;
+  padding: 0 0 16px 0; }
+  .movement--add-form input {
+    background: none;
+    width: 48px;
+    border: none;
+    border-bottom: 1px #2b3438 solid;
+    overflow-x: visible;
+    padding: 8px 0;
+    margin-bottom: 8px; }
+  .movement--add-form .movement__properties {
+    margin-bottom: 12px; }
+  .movement--add-form .movement__property-divider {
+    background-color: #7a939e; }
+
+.overlay {
+  position: fixed;
+  bottom: -50vh;
+  left: 0;
+  width: 100vw;
+  max-height: 70vh;
+  padding: 24px 16px 0;
+  box-shadow: 0 -2px 16px rgba(43, 52, 56, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  backdrop-filter: blur(2px);
+  transition: 0.5s bottom cubic-bezier(0.25, 0.9, 0.21, 1), 0.5s opacity cubic-bezier(0.25, 0.9, 0.21, 1); }
+  .overlay--visible {
+    opacity: 1;
+    bottom: 0; }
+  .overlay__header {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 12px; }
+    .overlay__header h2 {
+      flex: 1; }
+  .overlay__header-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px; }
+  .overlay__close-button {
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/close.svg");
+    background-position: center center;
+    background-repeat: no-repeat; }
+
+.movement-journal {
+  width: 100%;
+  overflow-y: scroll; }
+  .movement-journal div:first-child {
+    flex: 1; }
+  .movement-journal__entry {
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 18px 0;
+    border-bottom: 2px #2b3438 solid; }
+    .movement-journal__entry:last-child {
+      border: none; }
+    .movement-journal__entry div:first-child {
+      flex: 1; }
+    .movement-journal__entry .text-button {
+      margin-top: 16px; }
+    .movement-journal__entry-form {
+      display: none;
+      width: 100%; }
+      .movement-journal__entry-form--visible {
+        display: flex; }
+      .movement-journal__entry-form .movement-journal__property:first-child {
+        border: none; }
+  .movement-journal__date {
+    margin-bottom: 4px; }
+  .movement-journal__property {
+    flex-direction: column-reverse;
+    width: 41px;
+    border-left: 1px #49585e solid; }
+    .movement-journal__property:first-child {
+      border: none; }
+    .movement-journal__property h4,
+    .movement-journal__property p,
+    .movement-journal__property input {
+      color: #2b3438; }
+    .movement-journal__property p,
+    .movement-journal__property input {
+      width: 80%;
+      text-align: center;
+      margin-bottom: 4px; }
+    .movement-journal__property input {
+      border: none;
+      border-bottom: 1px #2b3438 solid;
+      background: none; }
+    .movement-journal__property--increase p {
+      color: #00a775; }
+    .movement-journal__property--decrease p {
+      color: #dc183b; }
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0; }
+
+button {
+  background: none;
+  border: none;
+  border-radius: 0; }
+
+.text-button {
+  width: 100%;
+  padding: 12px;
+  border: 2px #2b3438 solid;
+  border-bottom-width: 4px; }
+
+a {
+  text-decoration: none; }
+
+ul, ol {
+  list-style: none; }
+
+.hidden {
+  display: none; }
+
+body {
+  color: #2b3438;
+  font-size: 12px;
+  padding: 0;
+  margin: 0; }

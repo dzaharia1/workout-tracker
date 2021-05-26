@@ -13,16 +13,16 @@ function setsFunctionality() {
         thisButton.addEventListener('click', (e) => {
             addMovementOverlay.classList.add('overlay--visible');
             let form = document.querySelector('.movement--add-form');
-            let set = thisButton.parentNode.parentNode.getAttribute('data-setid');
-            form.setAttribute('set-number', set);
-            form.parentNode.querySelector('h2').innerText = `Add a movement to superset ${set}`;
+            let setid = thisButton.parentNode.parentNode.getAttribute('data-setid');
+            form.setAttribute('set-number', setid);
+            form.parentNode.querySelector('h2').innerText = `Add a movement to superset ${setid}`;
         });
     }
 
     saveMovementButton.addEventListener('click', () => {
         console.log('adding movement');
         let form = document.querySelector('.movement--add-form');
-        saveMovement(form, form.getAttribute('set-number'));
+        saveMovement(form, form.getAttribute('data-setid'));
         addMovementOverlay.classList.remove('overlay--visible');
     });
 
@@ -62,6 +62,7 @@ function setsFunctionality() {
 }
 
 function saveMovement(form, setId) {
+    console.log(`looking for set id ${setId}`);
     let routineId = document.querySelector('.header').getAttribute('data-routineid');
     let movementName = form.querySelector('.movement__name-field').value;
     let movementWeight = form.querySelector('input[name="weight"]').value;
@@ -70,7 +71,7 @@ function saveMovement(form, setId) {
     form.classList.remove('movement--add-form--visible');
     APIRequest('POST', 'addmovement', routineId, setId, movementName, movementWeight, movementSets, movementReps);
 
-    document.querySelector(`.set[data-setid="${setId}"] .movement__list`).appendChild(
+    document.querySelector(`.movement__list[data-setid="${setId}"]`).appendChild(
         createMovementNode(
             movementName,
             movementWeight,
@@ -131,13 +132,13 @@ function createSetNode() {
                 Add movement
             </button>
         </div>
-        <ul class="movement__list">
+        <ul class="movement__list" data-setid="${setNumber}">
         </ul>
     `;
 
     set.querySelector('.movement__add-new').addEventListener('click', () => {
         addMovementOverlay.classList.add('overlay--visible');
-        document.querySelector('.movement--add-form').setAttribute('set-number', set.querySelector('.movement__add-new').parentNode.getAttribute('data-setid'));
+        document.querySelector('.movement--add-form').setAttribute('data-setid', set.querySelector('.movement__add-new').parentNode.parentNode.getAttribute('data-setid'));
     });
 
     return set;

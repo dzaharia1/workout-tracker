@@ -14,7 +14,7 @@ function setsFunctionality() {
             addMovementOverlay.classList.add('overlay--visible');
             let form = document.querySelector('.movement--add-form');
             let setid = thisButton.parentNode.parentNode.getAttribute('data-setid');
-            form.setAttribute('set-number', setid);
+            form.setAttribute('data-setid', setid);
             form.parentNode.querySelector('h2').innerText = `Add a movement to superset ${setid}`;
         });
     }

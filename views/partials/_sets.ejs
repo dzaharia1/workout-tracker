@@ -20,7 +20,7 @@
                     Add a movement
                 </button>
             </div>
-            <ul class="movement__list">
+            <ul class="movement__list" data-setid="<%= i + 1 %>">
                 <% for (movement of movements) {
                     if (movement.set_id === i + 1) { %>
                         <li class="movement">
@@ -62,7 +62,7 @@
                     Add a movement
                 </button>
             </div>
-            <ul class="movement__list"></ul>
+            <ul class="movement__list" data-setid="1"></ul>
         </li>
     <% } %>
     <li class="set">

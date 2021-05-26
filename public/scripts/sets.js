@@ -122,45 +122,17 @@ function createSetNode() {
 
     set.innerHTML = `
         <h1 class="set__title">Superset ${setNumber}</h1>
+        <button class="movement__add-new">
+            <img src="/img/add.svg" alt="">
+            Add movement
+        </button>
         <ul class="movement__list">
-        <li class="movement movement--add-form">
-                <div class="movement__header">
-                    <input type="text" class="movement__name-field" placeholder="Movement name">
-                    <button class="movement__save-button" data-routineid="${routineId}" data-setid="${setNumber}"></button>
-                </div>
-                <p class="movement__thing">Properties:</p>
-                <div class="movement__properties">
-                    <div class="movement__property">
-                        <label for="weight">lbs</label>
-                        <input type="number" name="weight" id="" placehoder="-">
-                    </div>
-                    <div class="movement__property-divider"></div>
-                    <div class="movement__property">
-                        <label for="sets">Sets</label>
-                        <input type="number" name="sets" id="" placehoder="-">
-                    </div>
-                    <div class="movement__property-divider"></div>
-                    <div class="movement__property">
-                        <label for="reps">Reps</label>
-                        <input type="number" name="reps" id="" placehoder="-">
-                    </div>
-                </div>
-            </li>
-            <li class="movement__add">
-                <button class="movement__add-new text-button" data-routineid="${routineId}" data-setid="${setNumber}">
-                    Add a movement
-                </button>
-            </li>
         </ul>
     `;
 
     set.querySelector('.movement__add-new').addEventListener('click', () => {
-        set.querySelector('.movement--add-form').classList.add('movement--add-form--visible');
-    });
-
-    set.querySelector('.movement__save-button').addEventListener('click', () => {
-        console.log('adding movement');
-        saveMovement(set.querySelector('.movement--add-form'), set.querySelector('.movement__save-button'));
+        addMovementOverlay.classList.add('overlay--visible');
+        document.querySelector('.movement--add-form').setAttribute('set-number', this.parentNode.getAttribute('data-setid'));
     });
 
     return set;

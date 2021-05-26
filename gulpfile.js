@@ -16,10 +16,11 @@ const SOURCE = {
 
 function bsSync() {
 	return browserSync({
-		proxy: 'localhost:3333',
+		proxy: 'https://localhost:3333',
 		notify: true,
 		files: [SOURCE.js, SOURCE.ejs],
-		open: false
+		open: false,
+		https: true
 	});
 };
 

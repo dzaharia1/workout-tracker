@@ -23,27 +23,27 @@
             <ul class="movement__list" data-setid="<%= i + 1 %>">
                 <% for (movement of movements) {
                     if (movement.set_id === i + 1) { %>
-                        <li class="movement">
+                        <li class="movement" data-movementid="<%= movement.movement_id %>">
                             <div class="movement__header">
                                 <h3 class="movement__name"><%= movement.movement_name %></h3>
                                 <button class="movement__edit-button"></button>
                                 <button class="movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
                             </div>
-                            <p class="movement__thing">Last (<%= movement.to_char %>):</p>
+                            <p class="movement__thing">Last – <%= movement.to_char %>:</p>
                             <div class="movement__properties">
                                 <div class="movement__property">
                                     <h4>lbs</h4>
-                                    <p><%= movement.weight %></p>
+                                    <p id="weight"><%= movement.weight %></p>
                                 </div>
                                 <div class="movement__property-divider"></div>
                                 <div class="movement__property">
                                     <h4>sets</h4>
-                                    <p><%= movement.num_sets %></p>
+                                    <p id="sets"><%= movement.num_sets %></p>
                                 </div>
                                 <div class="movement__property-divider"></div>
                                 <div class="movement__property">
                                     <h4>reps</h4>
-                                    <p><%= movement.num_reps %></p>
+                                    <p id="reps"><%= movement.num_reps %></p>
                                 </div>
                             </div>
                         </li>

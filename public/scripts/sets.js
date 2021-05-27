@@ -1,6 +1,10 @@
 let addMovementButtons = document.querySelectorAll('.movement__add-new');
-let saveMovementButton = document.querySelector('.movement__save-button');
+let saveMovementButton = document.querySelector('.movement__save-button#add');
 const addMovementOverlay = document.querySelector('.overlay--add-movement');
+const editMovementOverlay = document.querySelector('.overlay--edit-movement');
+const editMovementSaveButton = document.querySelector('.movement__save-button#edit');
+const deleteMovementButton = document.querySelector('.movement__delete-button');
+const movementEditButtons = document.querySelectorAll('.movement__edit-button');
 const addSetButton = document.querySelector('.set__add-new');
 const movementJournal = document.querySelector('.movement-journal');
 const movementJournalButtons = document.querySelectorAll('.movement__journal-button');
@@ -11,6 +15,7 @@ const movementJournalSaveEntrybutton = document.querySelector('.movement-journal
 function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
         thisButton.addEventListener('click', (e) => {
+            closeAllOverlays();
             addMovementOverlay.classList.add('overlay--visible');
             let form = document.querySelector('.movement--add-form');
             let setid = thisButton.parentNode.parentNode.getAttribute('data-setid');
@@ -24,7 +29,7 @@ function setsFunctionality() {
         console.log('adding movement');
         let form = document.querySelector('.movement--add-form');
         saveMovement(form, form.getAttribute('data-setid'));
-        addMovementOverlay.classList.remove('overlay--visible');
+        closeAllOverlays();
     });
 
     addSetButton.addEventListener('click', () => {
@@ -33,10 +38,32 @@ function setsFunctionality() {
 
     for (let thisButton of movementJournalButtons) {
         thisButton.addEventListener('click', () => {
+            closeAllOverlays();
             populateMovementJournal(thisButton.getAttribute('data-movementid'), thisButton.getAttribute('data-movementname'));
             movementJournalOverlay.classList.add('overlay--visible');
         });
     }
+
+    for (let thisButton of movementEditButtons) {
+        thisButton.addEventListener('click', () => {
+            const movementNode = thisButton.parentNode.parentNode;
+            populateEditDialog(
+                movementNode.getAttribute('data-movementid'),
+                movementNode.parentNode.getAttribute('data-setid'),
+                movementNode.querySelector('.movement__name').innerText,
+                movementNode.querySelector('#weight').innerText,
+                movementNode.querySelector('#sets'),
+                movementNode.querySelector('#reps')
+            )
+            closeAllOverlays();
+            editMovementOverlay.classList.add('overlay--visible');
+        })
+    }
+
+    editMovementSaveButton.addEventListener('click', () => {
+        editMovement(editMovementSaveButton.parentNode.parentNode);
+        closeAllOverlays();
+    });
 
     movementJournalAddEntryButton.addEventListener('click', () => {
         document.querySelector('.movement-journal__entry-form').classList.add('movement-journal__entry-form--visible');
@@ -56,13 +83,79 @@ function setsFunctionality() {
 
         movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
         APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps);
-
         form.classList.remove('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.style.display = 'block';
     });
+
+    deleteMovementButton.addEventListener('click', () => {
+        const movementId = deleteMovementButton.getAttribute('data-movementid');
+        const movementNode = document.querySelector(`.movement[data-movementid="${movementId}"]`);
+
+        if (deleteMovementButton.getAttribute('data-mode') === 'confirm') {
+            console.log('removming');
+            movementNode.remove();
+            deleteMovementButton.setAttribute('data-mode', 'default');
+            deleteMovementButton.innerText = 'Delete';
+            APIRequest('DELETE', 'movement/delete', movementId, routineId);
+            closeAllOverlays();
+        } else {
+            console.log('confirming');
+            const movementName = movementNode.querySelector('.movement__name').innerText;
+            deleteMovementButton.setAttribute('data-mode', 'confirm');
+            deleteMovementButton.innerText = `Delete ${movementName}?`;
+        }
+
+    });
 }
 
-function saveMovement(form, setId) {
+function closeAllOverlays () {
+    for (let thisOverlay of document.querySelectorAll('.overlay')) {
+        thisOverlay.classList.remove('overlay--visible');
+    }
+}
+
+function populateEditDialog (movementId, setId, movementName) {
+    const overlayHeader = editMovementOverlay.querySelector('h2');
+    const nameInput = editMovementOverlay.querySelector('.movement__name-field');
+    const saveButton = editMovementOverlay.querySelector('.movement__save-button');
+    const deleteButton = editMovementOverlay.querySelector('.movement__delete-button');
+    const setSelector = editMovementOverlay.querySelector('.movement__set-field');
+
+    for (let option of setSelector.querySelectorAll('option')) {
+        if (option.value === setId) { option.setAttribute('selected', '') }
+    }
+
+    nameInput.value = movementName;
+    overlayHeader.innerText = `Edit ${movementName}`;
+    saveButton.setAttribute('data-movementid', movementId);
+    deleteButton.setAttribute('data-movementid', movementId);
+    deleteButton.setAttribute('mode', 'default');
+
+}
+
+function editMovement (form) {
+    const movementName = form.querySelector('[name="name"').value;
+    let setId = form.querySelector('[name=set]').value;
+    const movementId = form.querySelector('.movement__save-button').getAttribute('data-movementid');
+    const movementNode = document.querySelector(`.movement[data-movementid="${movementId}"]`);
+    const currentSetId = movementNode.parentNode.getAttribute('data-setid');
+    
+    if (setId === 'new') {
+        const newSet = createSetNode();
+        document.querySelector('.set__list').insertBefore(newSet, addSetButton.parentNode);
+        setId = newSet.getAttribute('data-setid');
+    }
+
+    if (setId !== currentSetId) {
+        const newSet = document.querySelector(`.movement__list[data-setid="${setId}"]`);
+        newSet.appendChild(movementNode);
+    }
+    movementNode.querySelector('.movement__name').innerText = movementName;
+    
+    APIRequest('PUT', 'movement/edit', movementId, movementName, setId);
+}
+
+function saveMovement (form, setId) {
     console.log(`looking for set id ${setId}`);
     let routineId = document.querySelector('.header').getAttribute('data-routineid');
     let movementName = form.querySelector('.movement__name-field').value;
@@ -70,7 +163,7 @@ function saveMovement(form, setId) {
     let movementSets = form.querySelector('input[name="sets"]').value;
     let movementReps = form.querySelector('input[name="reps"]').value;
     form.classList.remove('movement--add-form--visible');
-    APIRequest('POST', 'addmovement', routineId, setId, movementName, movementWeight, movementSets, movementReps);
+    APIRequest('POST', 'movement/add', routineId, setId, movementName, movementWeight, movementSets, movementReps);
 
     document.querySelector(`.movement__list[data-setid="${setId}"]`).appendChild(
         createMovementNode(

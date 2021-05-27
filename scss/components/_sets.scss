@@ -73,9 +73,10 @@
     }
 
     &__name,
-    &__name-field {
+    &__name-field,
+    &__set-field {
         @extend %body--strong;
-        flex: 1;
+        width: 100%;
         color: white;
     }
 
@@ -104,6 +105,24 @@
     &__properties {
         @extend %horizontal-center;
         justify-content: space-between;
+        width: 100%;
+
+        .text-button:first-child {
+            margin-right: 16px;
+        }
+    }
+
+    &__delete-button {
+        border-color: $red !important;
+        color: $red !important;
+        transition: .2s ease-out;
+
+        &[data-mode="confirm"] {
+            position: absolute;
+            background-color: $red;
+            color: $white !important;
+            width: calc(100vw - 32px) !important;
+        }
     }
 
     &__property {
@@ -119,10 +138,13 @@
         
         input {
             @extend %title-2;
-            width: 47px;
+            width: 48px;
             height: 29px;
+
+            overflow-x: visible;
+            background: none;
+
             text-align: center;
-            color: $slate5;
         }
 
         h4,
@@ -140,17 +162,18 @@
 }
 
 .movement--add-form {
+    @extend %vertical-start;
     width: 100%;
     padding: 0 0 16px 0;
 
-    input {
+    input,
+    select {
         background: none;
-        width: 48px;
         border: none;
         border-bottom: 1px $slate5 solid;
-        overflow-x: visible;
         padding: 8px 0;
         margin-bottom: 8px;
+        color: $slate5;
     }
 
     & .movement__properties {

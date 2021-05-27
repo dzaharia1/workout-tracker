@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -63,7 +63,7 @@ app.put('/routine/markComplete/:routineId', async (req, res) => {
   markRoutineComplete(req.params.routineId);
 });
 
-app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
+app.post('/movement/add/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
   console.log(`Adding ${req.params.movementName} to ${req.params.routineid} in ${req.params.setid}`);
   addMovement(
     req.params.routineid,
@@ -75,6 +75,14 @@ app.post('/addmovement/:routineid/:setid/:movementName/:weight/:sets/:reps', asy
   );
 });
 
+app.put('/movement/edit/:movementid/:movementname/:setid', async (req, res) => {
+  editMovement(
+    req.params.movementid,
+    req.params.movementname,
+    req.params.setid
+  )
+});
+
 app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', async (req, res) => {
   addMovementJournalEntry(
     req.params.routineid,
@@ -82,7 +90,14 @@ app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', asyn
     req.params.weight,
     req.params.sets,
     req.params.reps
-  )
+  );
+});
+
+app.delete('/movement/delete/:movementid/:routineid', async (req, res) => {
+  res.send(deleteMovement(
+    req.params.movementid,
+    req.params.routineid
+  ));
 });
 
 app.get('/journal/movement/:movementid', async (req, res) => {

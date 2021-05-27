@@ -87,18 +87,60 @@ module.exports = {
     addMovement: async (routineId, setId, movementName, movementWeight, movementSets, movementReps) => {
         const fixedName = SqlString.escape(movementName);
         const slug = fixedName.replace(/\s+/g, '').toLowerCase();
-        return await runQuery(`INSERT INTO movements (routine_id, set_id, movement_name, movement_slug, weight, num_sets, num_reps)
+        return await runQuery(`
+            INSERT INTO movements (routine_id, set_id, movement_name, movement_slug, weight, num_sets, num_reps)
             VALUES (${routineId}, ${setId}, ${fixedName}, ${slug}, ${movementWeight}, ${movementSets}, ${movementReps})
             RETURNING movement_id;`);
     },
-    updateMovement: async (movementId, weight, sets, reps) => {
+    editMovement: async (movementId, movementName, setId) => {
+        return await runQuery(`
+            UPDATE movements
+            SET set_id=${setId}, movement_name='${movementName}'
+            WHERE movement_id=${movementId};
+        `);
+    },
+    updateMovementNumbers: async (movementId, weight, sets, reps) => {
         return await runQuery(`
             UPDATE movements
             SET weight=${weight}, num_sets=${sets}, num_reps=${reps}
             WHERE movement_id=${movementId};`);
     },
+    deleteMovement: async (movementId, routineId) => {
+        let setId = await runQuery(`SELECT set_id FROM movements WHERE movement_id=${movementId}`);
+        setId = setId[0].set_id;
+        let setSize = await runQuery(`
+            SELECT * FROM movements
+            WHERE routine_id=${routineId} AND set_id=${setId};
+        `);
+        setSize = setSize.length;
+
+        console.log(`Set ID: ${setId} | Set Size: ${setSize}`);
+
+        if (setSize <= 1) {
+            await runQuery(`
+                UPDATE movements
+                SET set_id=set_id - 1
+                WHERE set_id > ${setId}
+                RETURNING movement_name, set_id;
+            `);
+        }
+
+        await runQuery(`
+            DELETE FROM journal
+            WHERE movement_id=${movementId};
+        `);
+        return await runQuery(`
+            DELETE FROM movements
+            WHERE movement_id=${movementId};
+        `);
+    },
     getMovementJournal: async (movementId) => {
-        return await runQuery(`SELECT *, TO_CHAR(completion_date :: DATE, 'Mon dd, ''yy') FROM journal WHERE movement_id=${movementId} ORDER BY completion_date DESC, entry_id DESC;`);
+        return await runQuery(`
+            SELECT *, TO_CHAR(completion_date :: DATE, 'Mon dd, ''yy')
+            FROM journal
+            WHERE movement_id=${movementId}
+            ORDER BY completion_date DESC, entry_id DESC;
+        `);
     },
     addMovementJournalEntry: async (movementId, routineId, weight, sets, reps) => {
         await runQuery(`

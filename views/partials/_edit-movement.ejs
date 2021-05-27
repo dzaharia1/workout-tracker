@@ -1,0 +1,19 @@
+<div class="overlay overlay--edit-movement">
+    <div class="overlay__header">
+        <img src="/img/edit.svg" alt="" class="overlay__header-icon">
+        <h2>Edit movement</h2>
+        <button class="overlay__close-button"></button>
+    </div>
+    <div class="movement--add-form">
+        <input name="name" type="text" class="movement__name-field" placeholder="Movement name">
+        <select name="set" id="" class="movement__set-field">
+            <% for (let i = 0; i < numSets; i ++) { %>
+                <option value="<%= i + 1 %>">Set <%= i + 1 %></option>
+            <% } %>
+        </select>
+        <div class="movement__properties">
+            <button class="text-button movement__delete-button">Delete</button>
+            <button class="text-button movement__save-button" id="edit">Save</button>
+        </div>
+    </div>
+</div>

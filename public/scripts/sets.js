@@ -135,11 +135,17 @@ function populateEditDialog (movementId, setId, movementName) {
 
 function editMovement (form) {
     const movementName = form.querySelector('[name="name"').value;
-    const setId = form.querySelector('[name=set]').value;
+    let setId = form.querySelector('[name=set]').value;
     const movementId = form.querySelector('.movement__save-button').getAttribute('data-movementid');
     const movementNode = document.querySelector(`.movement[data-movementid="${movementId}"]`);
     const currentSetId = movementNode.parentNode.getAttribute('data-setid');
     
+    if (setId === 'new') {
+        const newSet = createSetNode();
+        document.querySelector('.set__list').insertBefore(newSet, addSetButton.parentNode);
+        setId = newSet.getAttribute('data-setid');
+    }
+
     if (setId !== currentSetId) {
         const newSet = document.querySelector(`.movement__list[data-setid="${setId}"]`);
         newSet.appendChild(movementNode);

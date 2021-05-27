@@ -7,9 +7,11 @@
     <div class="movement--add-form">
         <input name="name" type="text" class="movement__name-field" placeholder="Movement name">
         <select name="set" id="" class="movement__set-field">
-            <% for (let i = 0; i < numSets; i ++) { %>
-                <option value="<%= i + 1 %>">Set <%= i + 1 %></option>
+            <% let i;
+            for (i = 0; i < numSets; i ++) { %>
+                <option value="<%= i + 1 %>">Superset <%= i + 1 %></option>
             <% } %>
+            <option value="new">New set</option>
         </select>
         <div class="movement__properties">
             <button class="text-button movement__delete-button">Delete</button>

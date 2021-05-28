@@ -178,7 +178,6 @@
         display: none;
         width: 100%;
         border-bottom: 2px $slate5 solid;
-        padding: 8px;
 
         &--visible {
             display: flex;
@@ -187,8 +186,10 @@
         input {
             @extend %body--strong;
             flex: 1;
+            padding: 12px 0 12px;
             border: none;
             color: $slate5;
+            background: none;
 
             &::focus {
                 border: 2px $slate3 solid;

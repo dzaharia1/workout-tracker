@@ -32,17 +32,24 @@ async function runQuery(query) {
 
 module.exports = {
     getTodaysDate: async () => {
-        let date = await runQuery(`SELECT CURRENT_DATE, TO_CHAR(CURRENT_DATE :: DATE, 'Mon dd, ''yy');`);
+        let date = await runQuery(`
+            SELECT CURRENT_DATE, TO_CHAR(CURRENT_DATE :: DATE, 'Mon dd, ''yy');
+        `);
         return date[0].to_char;
     },
     getRoutines: async () => {
-        return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines ORDER BY routine_order;`);
+        return await runQuery(`
+            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines ORDER BY routine_order;
+        `);
     },
     getRoutineById: async (routineId) => {
-        return await runQuery(`SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines WHERE routine_id=${routineId};`);
+        return await runQuery(`
+            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines WHERE routine_id=${routineId};
+        `);
     },
     markRoutineComplete: async (routineId) => {
-        await runQuery(`INSERT INTO journal (routine_id)
+        await runQuery(`
+            INSERT INTO journal (routine_id)
             VALUES (${routineId})
             RETURNING routine_id;`);
         return await runQuery(`UPDATE routines
@@ -50,39 +57,61 @@ module.exports = {
             WHERE routine_id=${routineId};`);
     },
     unmarkRoutineComplete: async (routineId) => {
-        await runQuery(`DELETE FROM journal WHERE routine_id=${routineId};`);
-        let previousDate = await runQuery(`SELECT completion_date FROM JOURNAL WHERE routine_id=${routineId};`)
-        return await runQuery(`UPDATE routines
+        await runQuery(`
+            DELETE FROM journal WHERE routine_id=${routineId};
+        `);
+        let previousDate = await runQuery(`
+            SELECT completion_date FROM JOURNAL WHERE routine_id=${routineId};
+        `);
+        return await runQuery(`
+            UPDATE routines
             SET last_logged=${previousDate}
             WHERE routine_id=${routineId}`);
     },
     getUpNextRoutine: async () => {
-        return await runQuery(`SELECT * FROM ROUTINES
-        ORDER BY last_logged
-        FETCH FIRST 1 rows ONLY;`);
+        return await runQuery(`
+            SELECT * FROM ROUTINES
+            ORDER BY last_logged
+            FETCH FIRST 1 rows ONLY;
+        `);
     },
     addRoutine: async (routineName, routineOrder) => {
         const fixedOrder = parseInt(routineOrder, 10);
         const fixedName = SqlString.escape(routineName);
         const slug = fixedName.replace(/\s+/g, '').toLowerCase();
-        return await runQuery(`INSERT INTO routines (routine_name, routine_slug, routine_order)
-        VALUES (${fixedName}, ${slug}, ${fixedOrder})
-        RETURNING routine_id;`);
+        return await runQuery(`
+            INSERT INTO routines (routine_name, routine_slug, routine_order)
+            VALUES (${fixedName}, ${slug}, ${fixedOrder})
+            RETURNING routine_id;
+        `);
     },
     changeRoutineOrder: async (categorySlug, order) => {
         // todo
     },
     getRoutineJournal: async (routineId) => {
-        return await runQuery(`SELECT * FROM journal WHERE routine_id=${routineId}`);
+        return await runQuery(`
+            SELECT * FROM journal WHERE routine_id=${routineId}
+        `);
     },
     getNumSets: async (routineId) => {
-        return await runQuery(`SELECT COUNT(DISTINCT set_id) FROM movements WHERE routine_id=${routineId};`);
+        return await runQuery(`
+            SELECT COUNT(DISTINCT set_id)
+            FROM movements
+            WHERE routine_id=${routineId};
+        `);
     },
     getAllMovements: async () => {
-        return await runQuery('SELECT * FROM movements');
+        return await runQuery(`
+            SELECT * FROM movements
+        `);
     },
     getRoutineMovements: async (routineId) => {
-        return await runQuery(`SELECT *, TO_CHAR(last_completed :: DATE, 'Mon dd, ''yy') FROM movements WHERE routine_id=${routineId} ORDER BY movement_id;`);
+        return await runQuery(`
+            SELECT *, TO_CHAR(last_completed :: DATE, 'Mon dd, ''yy')
+            FROM movements
+            WHERE routine_id=${routineId}
+            ORDER BY movement_id;
+        `);
     },
     addMovement: async (routineId, setId, movementName, movementWeight, movementSets, movementReps) => {
         const fixedName = SqlString.escape(movementName);
@@ -106,7 +135,9 @@ module.exports = {
             WHERE movement_id=${movementId};`);
     },
     deleteMovement: async (movementId, routineId) => {
-        let setId = await runQuery(`SELECT set_id FROM movements WHERE movement_id=${movementId}`);
+        let setId = await runQuery(`
+            SELECT set_id FROM movements WHERE movement_id=${movementId}
+        `);
         setId = setId[0].set_id;
         let setSize = await runQuery(`
             SELECT * FROM movements

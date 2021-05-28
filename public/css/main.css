@@ -174,14 +174,15 @@
   .menu__add-routine {
     display: none;
     width: 100%;
-    border-bottom: 2px #2b3438 solid;
-    padding: 8px; }
+    border-bottom: 2px #2b3438 solid; }
     .menu__add-routine--visible {
       display: flex; }
     .menu__add-routine input {
       flex: 1;
+      padding: 12px 0 12px;
       border: none;
-      color: #2b3438; }
+      color: #2b3438;
+      background: none; }
       .menu__add-routine input::focus {
         border: 2px #49585e solid; }
     .menu__add-routine button {

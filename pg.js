@@ -103,6 +103,7 @@ module.exports = {
     getAllMovements: async () => {
         return await runQuery(`
             SELECT * FROM movements
+            ORDER BY set_id, movement_id;
         `);
     },
     getRoutineMovements: async (routineId) => {
@@ -110,7 +111,7 @@ module.exports = {
             SELECT *, TO_CHAR(last_completed :: DATE, 'Mon dd, ''yy')
             FROM movements
             WHERE routine_id=${routineId}
-            ORDER BY movement_id;
+            ORDER BY set_id, movement_id;
         `);
     },
     addMovement: async (routineId, setId, movementName, movementWeight, movementSets, movementReps) => {
@@ -121,18 +122,41 @@ module.exports = {
             VALUES (${routineId}, ${setId}, ${fixedName}, ${slug}, ${movementWeight}, ${movementSets}, ${movementReps})
             RETURNING movement_id;`);
     },
-    editMovement: async (movementId, movementName, setId) => {
-        return await runQuery(`
-            UPDATE movements
-            SET set_id=${setId}, movement_name='${movementName}'
-            WHERE movement_id=${movementId};
-        `);
-    },
     updateMovementNumbers: async (movementId, weight, sets, reps) => {
         return await runQuery(`
             UPDATE movements
             SET weight=${weight}, num_sets=${sets}, num_reps=${reps}
             WHERE movement_id=${movementId};`);
+    },
+    editMovement: async (movementId, movementName, setId) => {
+        let movement = await runQuery(`
+            SELECT routine_id, set_id FROM movements
+            WHERE movement_id=${movementId};
+        `);
+        let originalSet = movement[0].set_id;
+        let routineId = movement[0].routine_id;
+        
+        let setSize = await runQuery(`
+            SELECT * FROM movements
+            WHERE routine_id=${routineId} AND set_id=${originalSet};
+        `);
+        setSize = setSize.length;
+        
+        let ret = await runQuery(`
+            UPDATE movements
+            SET set_id=${setId}, movement_name='${movementName}'
+            WHERE movement_id=${movementId};
+        `);
+
+        if (setSize <= 1) {
+            await runQuery(`
+                UPDATE movements
+                SET set_id=set_id-1
+                WHERE set_id > ${originalSet};
+            `);
+        }
+
+        return ret;
     },
     deleteMovement: async (movementId, routineId) => {
         let setId = await runQuery(`
@@ -145,14 +169,11 @@ module.exports = {
         `);
         setSize = setSize.length;
 
-        console.log(`Set ID: ${setId} | Set Size: ${setSize}`);
-
         if (setSize <= 1) {
             await runQuery(`
                 UPDATE movements
                 SET set_id=set_id - 1
-                WHERE set_id > ${setId}
-                RETURNING movement_name, set_id;
+                WHERE set_id > ${setId};
             `);
         }
 

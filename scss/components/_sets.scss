@@ -85,21 +85,13 @@
     }
 
     &__journal-button {
-        width: 24px;
-        height: 24px;
         background-image: url('/img/journal--white.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
         margin-left: 8px;
     }
 
 
     &__edit-button {
-        width: 24px;
-        height: 24px;
         background-image: url('/img/edit--white.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
 
     &__properties {

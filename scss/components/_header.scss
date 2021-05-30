@@ -12,8 +12,8 @@
     }
 
     &__menu-button {
-        width: 24px;
-        height: 24px;
+        width: $primary-button-size;
+        height: $primary-button-size;
         background-image: url('/img/menu.svg');
         background-size: contain;
         background-repeat: no-repeat;
@@ -93,8 +93,8 @@
     }
 
     &__close {
-        width: 24px;
-        height: 24px;
+        width: $primary-button-size;
+        height: $primary-button-size;
         background-image: url('/img/back.svg');
     }
 
@@ -147,8 +147,8 @@
         }
 
         &-drag-handle {
-            width: 16px;
-            height: 16px;
+            width: $primary-button-size;
+            height: $primary-button-size;
             background-image: url('/img/menu.svg');
             background-size: contain;
             background-repeat: no-repeat;
@@ -197,8 +197,8 @@
         }
 
         button {
-            width: 24px;
-            height: 24px;
+            width: $primary-button-size;
+            height: $primary-button-size;
             background-image: url(/img/add.svg);
             background-repeat: no-repeat;
             background-size: contain;

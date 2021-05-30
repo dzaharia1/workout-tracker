@@ -1,3 +1,4 @@
+@import 'scaffolding/variables';
 @import 'scaffolding/utilities';
 @import 'scaffolding/type';
 @import 'scaffolding/colors';
@@ -22,6 +23,14 @@ button {
 	border: none;
 	border-radius: 0;
 
+}
+
+.icon-button {
+	width: $primary-button-size;
+	height: $primary-button-size;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }
 
 .text-button {

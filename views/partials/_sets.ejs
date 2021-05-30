@@ -26,8 +26,8 @@
                         <li class="movement" data-movementid="<%= movement.movement_id %>">
                             <div class="movement__header">
                                 <h3 class="movement__name"><%= movement.movement_name %></h3>
-                                <button class="movement__edit-button"></button>
-                                <button class="movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
+                                <button class="icon-button movement__edit-button"></button>
+                                <button class="icon-button movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
                             </div>
                             <p class="movement__thing">Last – <%= movement.to_char %>:</p>
                             <div class="movement__properties">

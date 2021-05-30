@@ -155,8 +155,8 @@
       margin: -3px 0;
       color: #ffffff; }
     .menu__routine-drag-handle {
-      width: 16px;
-      height: 16px;
+      width: 24px;
+      height: 24px;
       background-image: url("/img/menu.svg");
       background-size: contain;
       background-repeat: no-repeat;
@@ -280,18 +280,10 @@
   .movement__name-field {
     color: #2b3438; }
   .movement__journal-button {
-    width: 24px;
-    height: 24px;
     background-image: url("/img/journal--white.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
     margin-left: 8px; }
   .movement__edit-button {
-    width: 24px;
-    height: 24px;
-    background-image: url("/img/edit--white.svg");
-    background-size: contain;
-    background-repeat: no-repeat; }
+    background-image: url("/img/edit--white.svg"); }
   .movement__properties {
     justify-content: space-between;
     width: 100%; }
@@ -449,6 +441,13 @@ button {
   background: none;
   border: none;
   border-radius: 0; }
+
+.icon-button {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
 
 .text-button {
   width: 100%;

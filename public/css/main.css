@@ -428,17 +428,16 @@
     .movement-journal__property--decrease p {
       color: #dc183b; }
 
-.progress-step--upcoming, .progress-step--completed {
+.progress-step {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   border: 2px #2b3438 solid;
   margin-right: 4px; }
-  .progress-step--upcoming:last-child, .progress-step--completed:last-child {
+  .progress-step:last-child {
     margin: 0; }
-
-.progress-step--completed {
-  background: #2b3438; }
+  .progress-step--completed {
+    background: #2b3438; }
 
 * {
   box-sizing: border-box;

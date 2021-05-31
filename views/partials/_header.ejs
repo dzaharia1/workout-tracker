@@ -1,13 +1,13 @@
-<header class="header" data-routineid="<%= thisRoutine.routine_id %>">
+<header class="header" data-date="<%= todaysDate %>" data-routineid="<%= thisRoutine.routine_id %>">
     <button class="header__menu-button"></button>
     <div class="header__heading">
         <h1 class="header__title"><%= thisRoutine.routine_name %></h1>
         <div class="progress-bar">
             <% for (let thisMovement of movements) { %>
                 <% if (thisMovement.to_char === todaysDate) {%>
-                    <div class="progress-step--completed"></div>
+                    <div class="progress-step progress-step--completed" data-movementid="<%= thisMovement.movement_id %>"></div>
                 <% } else {%>
-                    <div class="progress-step--upcoming"></div>
+                    <div class="progress-step" data-movementid="<%= thisMovement.movement_id %>"></div>
                 <% } %>
             <% } %>
         </div>

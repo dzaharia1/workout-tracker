@@ -5,12 +5,12 @@
             <div class="set__header">
                 <h1 class="set__title">Superset <%= i + 1 %></h1>
                 <div class="progress-bar">
-                    <% for (let movement of movements) { %>
-                        <% if (movement.set_id === i + 1) { %>
-                            <% if (movement.to_char === todaysDate) { %>
-                                <div class="progress-step--completed"></div>
+                    <% for (let thisMovement of movements) { %>
+                        <% if (thisMovement.set_id === i + 1) { %>
+                            <% if (thisMovement.to_char === todaysDate) { %>
+                                <div class="progress-step progress-step--completed" data-movementid="<%= thisMovement.movement_id %>"></div>
                             <% } else { %>
-                                <div class="progress-step--upcoming"></div>
+                                <div class="progress-step" data-movementid="<%= thisMovement.movement_id %>"></div>
                             <%} %>
                         <% } %>
                     <% } %>

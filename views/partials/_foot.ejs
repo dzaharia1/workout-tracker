@@ -1,5 +1,6 @@
     <script>
         let readyFunctions = [];
+        let today = document.querySelector('header').getAttribute('data-date');
         if (document.readyState != 'loading') {
             runReadyFunctions();
         }
@@ -31,5 +32,6 @@
     <script src="/scripts/header.js"></script>
     <script src="/scripts/sets.js"></script>
     <script src="/scripts/overlay.js"></script>
+    <script src="/scripts/sync-progress.js"></script>
 </body>
 </html>

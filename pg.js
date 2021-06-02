@@ -148,7 +148,7 @@ module.exports = {
             WHERE movement_id=${movementId};
         `);
 
-        if (setSize <= 1) {
+        if (setSize < 1) {
             await runQuery(`
                 UPDATE movements
                 SET set_id=set_id-1

@@ -82,7 +82,8 @@ function setsFunctionality() {
         const date = movementJournalSaveEntrybutton.getAttribute('data-date');
 
         movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
-        APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps);
+        APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps)
+            .then(syncProgress(routineId));
         form.classList.remove('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.style.display = 'block';
     });
@@ -153,10 +154,10 @@ function editMovement (form) {
     movementNode.querySelector('.movement__name').innerText = movementName;
     
     APIRequest('PUT', 'movement/edit', movementId, movementName, setId);
+    syncProgress(routineId);
 }
 
 function saveMovement (form, setId) {
-    console.log(`looking for set id ${setId}`);
     let routineId = document.querySelector('.header').getAttribute('data-routineid');
     let movementName = form.querySelector('.movement__name-field').value;
     let movementWeight = form.querySelector('input[name="weight"]').value;

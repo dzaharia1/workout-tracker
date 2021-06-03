@@ -4,11 +4,11 @@
     }
 
     &-step {
-        width: 12px;
-        height: 12px;
+        width: $spacer-2;
+        height: $spacer-2;
         border-radius: 50%;
         border: 2px $slate5 solid;
-        margin-right: 4px;
+        margin-right: $spacer;
 
         &:last-child {
             margin: 0;

@@ -6,8 +6,8 @@
     width: 100vw;
     max-height: 70vh;
 
-    padding: 24px 16px 0;
-    box-shadow: 0 -2px 16px transparentize($slate5, .2);
+    padding: $spacer-4 $spacer-3 0;
+    box-shadow: 0 -2px $spacer-3 transparentize($slate5, .2);
 
     background-color: transparentize($white, .92);
     opacity: 0;
@@ -24,7 +24,7 @@
         @extend %horizontal-center;
         width: 100%;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: $spacer-2;
 
         h2 {
             @extend %body--strong;
@@ -33,16 +33,12 @@
     }
 
     &__header-icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
+        width: $spacer-4;
+        height: $spacer-4;
+        margin-right: $spacer-1;
     }
 
     &__close-button {
-        width: 24px;
-        height: 24px;
         background-image: url('/img/close.svg');
-        background-position: center center;
-        background-repeat: no-repeat;
     }
 }

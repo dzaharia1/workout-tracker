@@ -1,5 +1,5 @@
 <header class="header" data-date="<%= todaysDate %>" data-routineid="<%= thisRoutine.routine_id %>">
-    <button class="header__menu-button"></button>
+    <button class="icon-button--small header__menu-button"></button>
     <div class="header__heading">
         <h1 class="header__title"><%= thisRoutine.routine_name %></h1>
         <div class="progress-bar">
@@ -23,7 +23,7 @@
 
 <nav class="menu">
     <div class="menu__header">
-        <button class="menu__close"></button>
+        <button class="icon-button--small menu__close"></button>
         <h2 class="header__title">Routines</h2>
         <h2 class="header__journal-button">Sort</h2>
     </div>
@@ -36,16 +36,16 @@
                 <% } else { %>
                     <aside class="menu__routine-completed"><%= routine.to_char %></aside>
                 <% } %>
-                <button class="menu__routine-drag-handle"></button>
+                <button class="icon-button--small menu__routine-drag-handle"></button>
             </li>
         <% } %>
         <li class="menu__add-routine">
             <input type="text" id="" placeholder="Name your routine">
             <button class="menu__cancel-add"></button>
         </li>
+        <button class="menu__create-routine">
+            <img src="/img/add.svg" alt="">
+            Create a routine
+        </button>
     </ul>
-    <button class="menu__create-routine">
-        <img src="/img/add.svg" alt="">
-        Create a routine
-    </button>
 </nav>

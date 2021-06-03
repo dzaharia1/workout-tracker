@@ -7,14 +7,14 @@
     width: 100%;
     background-color: $slate5;
     color: $white;
-    padding: 8px 16px;
+    padding: $spacer-1 $spacer-3;
 }
 
 .routine {
     &__progress {
         p {
             @extend %body;
-            margin-bottom: 4px;
+            margin-bottom: $spacer;
         }
     }
 
@@ -26,8 +26,8 @@
 
     &__progress-step--upcoming,
     &__progress-step--complete {
-        width: 16px;
-        height: 16px;
+        width: $spacer-3;
+        height: $spacer-3;
         border-radius: 50%;
         margin: 0px 3px 3px 0px;
 
@@ -47,13 +47,13 @@
     &__add-to-log {
         @extend %horizontal-center;
         @extend %caption--strong;
-        padding: 8px 18px;
+        padding: $spacer-1 18px;
         color: $white;
         border: 3px $white solid;
-        margin-bottom: 8px;
+        margin-bottom: $spacer-1;
 
         div {
-            margin-right: 8px;
+            margin-right: $spacer-1;
             margin-top: 2px;
         }
     }

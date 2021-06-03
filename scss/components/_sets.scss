@@ -11,20 +11,19 @@
     &__header {
         @extend %horizontal-center;
         width: 100%;
-        padding: 16px 0;
+        padding: $spacer-3 0;
         border-top: 1px transparentize($slate5, .5) solid;
-        // margin-bottom: 12px;
     }
 
     &__list {
         @extend %vertical-start;
         width: 100%;
-        padding: 88px 16px 0;
+        padding: 88px $spacer-3 0;
     }
 
     &__title {
         @extend %body--strong;
-        margin-right: 12px;
+        margin-right: $spacer-2;
     }
 
     &__add-new {
@@ -37,11 +36,12 @@
 }
 
 .movement {
+    // width: 100%;
     width: 228px;
     background-color: $slate5;
     color: $white;
-    padding: 12px;
-    margin-right: 8px;
+    padding: $spacer-2;
+    margin-right: $spacer-2;
     flex-shrink: 0;
 
     &__add-new {
@@ -49,9 +49,9 @@
         @extend %body;
 
         img {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
+            width: $spacer-3;
+            height: $spacer-3;
+            margin-right: $spacer-1;
         }
     }
 
@@ -73,7 +73,12 @@
     }
 
     &__name,
-    &__name-field,
+    &__name-field {
+        @extend %subtitle;
+        width: 100%;
+        color: $white;
+    }
+
     &__set-field {
         @extend %body--strong;
         width: 100%;
@@ -86,7 +91,7 @@
 
     &__journal-button {
         background-image: url('/img/journal--white.svg');
-        margin-left: 8px;
+        margin-left: $spacer;
     }
 
 
@@ -100,7 +105,7 @@
         width: 100%;
 
         .text-button:first-child {
-            margin-right: 16px;
+            margin-right: $spacer-3;
         }
     }
 
@@ -120,28 +125,21 @@
     &__property {
         @extend %vertical-center;
         flex-direction: column-reverse;
-        width: 57px;
+        width: 50px;
+        // padding: 0 $spacer-2;
 
-        p {
-            @extend %title-2;
-            text-align: center;
-            margin: 0 0 4px 0;
-        }
-        
+        p,
         input {
             @extend %title-2;
-            width: 48px;
-            height: 29px;
-
-            overflow-x: visible;
-            background: none;
-
             text-align: center;
+            margin: 0 0 $spacer 0;
+            width: 100%;
+            overflow-x: visible;
         }
 
         h4,
         label {
-            @extend %body;
+            @extend %body--strong;
             text-align: center;
         }
 
@@ -156,20 +154,20 @@
 .movement--add-form {
     @extend %vertical-start;
     width: 100%;
-    padding: 0 0 16px 0;
+    padding: 0 0 $spacer-3 0;
 
     input,
     select {
         background: none;
         border: none;
         border-bottom: 1px $slate5 solid;
-        padding: 8px 0;
-        margin-bottom: 8px;
+        padding: $spacer-1 0;
+        margin-bottom: $spacer-1;
         color: $slate5;
     }
 
     & .movement__properties {
-        margin-bottom: 12px;
+        margin-bottom: $spacer-2;
     }
 
     .movement__property-divider {

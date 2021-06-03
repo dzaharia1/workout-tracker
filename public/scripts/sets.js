@@ -66,8 +66,16 @@ function setsFunctionality() {
     });
 
     movementJournalAddEntryButton.addEventListener('click', () => {
-        document.querySelector('.movement-journal__entry-form').classList.add('movement-journal__entry-form--visible');
+        const form = document.querySelector('.movement-journal__entry-form');
+        const inputs = form.querySelectorAll('input');
+
+        for (let thisInput of inputs) {
+            thisInput.value = '';
+        }
+
+        form.classList.add('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.style.display = 'none';
+        form.querySelector('input').focus();
     });
 
     movementJournalSaveEntrybutton.addEventListener('click', () => {

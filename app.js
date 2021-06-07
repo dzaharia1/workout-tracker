@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
 const cons = require('consolidate');
-const postgres = require('./pg.js');
+const postgres = require('./database/pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements } = require('./database/pg.js');
 const app = express();
 
 const localport = '3333';
@@ -28,7 +28,7 @@ app.get('/routine/:routine', async (req, res) => {
 });
 
 async function assemblePageData (routineId) {
-  let routines = await getRoutines();
+  let routines = await postgres.routines.getRoutines();
   let nextRoutine = await getUpNextRoutine();
   let thisRoutine;
   if (routineId) {

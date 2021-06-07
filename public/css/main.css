@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
-.movement-journal__entry {
+.overlay__actions, .movement-journal__entry {
   display: flex;
   flex-direction: row;
   align-items: flex-start; }
@@ -373,14 +373,29 @@
     background-image: url("/img/close.svg");
     background-position: center center;
     background-repeat: no-repeat; }
+  .overlay__actions {
+    width: 100%;
+    margin-bottom: 16px; }
+    .overlay__actions button {
+      flex: 1;
+      margin-right: 8px; }
+      .overlay__actions button:last-child {
+        margin-right: 0; }
 
 .movement-journal {
   width: 100%;
   overflow-y: scroll; }
-  .movement-journal__add-new {
-    margin-bottom: 16px; }
   .movement-journal div:first-child {
     flex: 1; }
+  .movement-journal__entry-form, .movement-journal__note-form {
+    display: none;
+    width: 100%; }
+    .movement-journal__entry-form--visible, .movement-journal__note-form--visible {
+      display: flex; }
+    .movement-journal__entry-form textarea, .movement-journal__note-form textarea {
+      width: 100%; }
+    .movement-journal__entry-form .movement-journal__property:first-child, .movement-journal__note-form .movement-journal__property:first-child {
+      border: none; }
   .movement-journal__entry {
     flex-wrap: wrap;
     width: 100%;
@@ -395,13 +410,6 @@
       flex: 1; }
     .movement-journal__entry .text-button {
       margin-top: 16px; }
-    .movement-journal__entry-form {
-      display: none;
-      width: 100%; }
-      .movement-journal__entry-form--visible {
-        display: flex; }
-      .movement-journal__entry-form .movement-journal__property:first-child {
-        border: none; }
   .movement-journal__date {
     margin-bottom: 4px; }
   .movement-journal__property {

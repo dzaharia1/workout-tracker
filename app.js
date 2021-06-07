@@ -3,7 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements, addMovementJournalNote } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -95,6 +95,14 @@ app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', asyn
     req.params.weight,
     req.params.sets,
     req.params.reps
+  );
+});
+
+app.post(`/journal/addmovementnote/:routineid/:movementid/:note`, async (req, res) => {
+  addMovementJournalNote(
+    req.params.routineid,
+    req.params.movementid,
+    req.params.note
   );
 });
 

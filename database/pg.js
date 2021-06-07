@@ -1,40 +1,9 @@
-const SqlString = require('sqlstring');
-const { Pool, Client } = require('pg');
-const routines = require('./routines.js');
-
-
-let client;
-
-if (process.env.DATABASE_URL) {
-    client = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
-        }
-    });
-} else {
-    client = new Client({
-        connectionString: `postgresql://dan@localhost:5432/workouts`
-    });
-}
-client.connect();
-
-let runQuery = async (query) => {
-    let rows;
-
-    try {
-        rows = await client.query(query);
-    } catch (error) {
-        console.error('~~~~~~~~~~~~~~there was an error~~~~~~~~~~~~~~~~');
-        console.error(error.stack);
-    } finally {
-        return rows.rows;
-    }
-}
+const database = require('./runquery.js');
+const routines = require('./routines.js')(database);
 
 module.exports = {
+    database: database,
     routines: routines,
-    runQuery: runQuery,
     getTodaysDate: async () => {
         let date = await runQuery(`
             SELECT CURRENT_DATE, TO_CHAR(CURRENT_DATE :: DATE, 'Mon dd, ''yy');

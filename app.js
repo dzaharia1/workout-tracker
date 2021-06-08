@@ -100,8 +100,8 @@ app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', asyn
 
 app.post(`/journal/addmovementnote/:routineid/:movementid/:note`, async (req, res) => {
   addMovementJournalNote(
-    req.params.routineid,
     req.params.movementid,
+    req.params.routineid,
     req.params.note
   );
 });

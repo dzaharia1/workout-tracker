@@ -10,7 +10,10 @@ const movementJournal = document.querySelector('.movement-journal');
 const movementJournalButtons = document.querySelectorAll('.movement__journal-button');
 const movementJournalOverlay = document.querySelector('.overlay--movement-journal');
 const movementJournalAddEntryButton = document.querySelector('.movement-journal__add-new');
+const movementJournalAddNoteButton = document.querySelector('.movement-journal__add-note');
 const movementJournalSaveEntrybutton = document.querySelector('.movement-journal__entry-form .text-button');
+const movementJournalSaveNotebutton = document.querySelector('.movement-journal__note-form .text-button');
+
 
 function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
@@ -79,6 +82,17 @@ function setsFunctionality() {
         form.querySelector('input').focus();
     });
 
+    movementJournalAddNoteButton.addEventListener('click', () => {
+        const form = document.querySelector('.movement-journal__note-form');
+        const noteInput = form.querySelector('textarea');
+
+        noteInput.value = '';
+
+        form.classList.add('movement-journal__note-form--visible');
+        movementJournalAddNoteButton.parentNode.style.display = 'none';
+        noteInput.focus();
+    });
+
     movementJournalSaveEntrybutton.addEventListener('click', () => {
         const form = movementJournalSaveEntrybutton.parentNode;
         const movementId = movementJournal.getAttribute('data-movementid');
@@ -90,11 +104,31 @@ function setsFunctionality() {
         const reps = form.querySelector('input[name="reps"]').value;
         const date = movementJournalSaveEntrybutton.getAttribute('data-date');
 
-        movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
         APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps)
-            .then(syncProgress(routineId));
+            .then(() => {
+                syncProgress(routineId)
+                movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
+            });
         form.classList.remove('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.parentNode.style.display = 'flex';
+    });
+
+    movementJournalSaveNotebutton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const form = movementJournalSaveNotebutton.parentNode;
+        const movementId = movementJournal.getAttribute('data-movementid');
+        const note = form.querySelector('textarea').value;
+        const date = movementJournalSaveNotebutton.getAttribute('data-date');
+        console.log(movementId);
+
+        movementJournal.prepend(createMovementJournalNoteNode(date, note));
+        APIRequest('POST', 'journal/addmovementnote', routineId, movementId, note)
+            .then(() => {
+                movementJournal.prepend(createMovementJournalNoteNode(date, note));
+            });
+        
+        form.classList.remove('movement-journal__note-form--visible');
+        movementJournalAddNoteButton.parentNode.style.display = 'flex';
     });
 
     deleteMovementButton.addEventListener('click', () => {

@@ -208,9 +208,10 @@ module.exports = {
         `);
     },
     addMovementJournalNote: async (movementId, routineId, note) => {
+        const fixedNote = SqlString.escape(note);
         return await runQuery(`
             INSERT INTO journal (movement_id, routine_id, note, type)
-            VALUES (${movementId}, ${routineId}, '${note}', 'note')
+            VALUES (${movementId}, ${routineId}, ${fixedNote}, 'note')
             RETURNING movement_id;
         `);
     }

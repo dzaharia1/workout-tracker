@@ -9,8 +9,8 @@
         <button class="movement-journal__add-note text-button">Add note</button>
     </div>
     <form class="movement-journal__entry movement-journal__note-form">
-        <textarea name="note" rows="5" placeholder="Add a note">
-        <button class="text-button" data-date="<%= todaysDate %>"></button>
+        <textarea name="note" rows="3" placeholder="Add a note"></textarea>
+        <button class="text-button" data-date="<%= todaysDate %>">Save note</button>
     </form>
     <form class="movement-journal__entry movement-journal__entry-form">
         <div>
@@ -29,7 +29,7 @@
             <label for="reps">reps</label>
             <input type="number" name="reps">
         </div>
-        <button class="text-button" data-date="<%= todaysDate %>">Save</button>
+        <button class="text-button" data-date="<%= todaysDate %>">Save entry</button>
     </form>
     <ul class="movement-journal">
     </ul>

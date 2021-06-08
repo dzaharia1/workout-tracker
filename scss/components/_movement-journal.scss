@@ -16,7 +16,11 @@
         }
 
         textarea {
+            @extend %body;
             width: 100%;
+            background: none;
+            border: none;
+            border-bottom: 1px $slate5 solid;
         }
 
         .movement-journal__property:first-child {

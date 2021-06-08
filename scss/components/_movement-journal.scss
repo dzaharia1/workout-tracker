@@ -16,7 +16,7 @@
         }
 
         textarea {
-            @extend %body;
+            @extend %body--strong;
             width: 100%;
             background: none;
             border: none;
@@ -59,6 +59,10 @@
     }
 
     &__name {
+        @extend %body--strong;
+    }
+
+    &__note {
         @extend %body--strong;
     }
 

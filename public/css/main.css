@@ -24,9 +24,9 @@
   flex-direction: column;
   align-items: center; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, .movement-journal__name, .movement-journal__note, .movement-journal__property p,
 .movement-journal__property input, button, .text-button, .routine__progress p, .movement__add-new, .movement__property h4,
-.movement__property label, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, body, .header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.movement__property label, body, .header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
 .movement-journal__property label {
   font-family: "Montserrat", helvetica, sans-serif;
   font-weight: normal; }
@@ -49,14 +49,14 @@
   line-height: 22px;
   letter-spacing: .04em; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, .movement-journal__name, .movement-journal__note, .movement-journal__property p,
 .movement-journal__property input, button, .text-button, .routine__progress p, .movement__add-new, .movement__property h4,
-.movement__property label, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, body {
+.movement__property label, body {
   font-size: 12px;
   line-height: 15px;
   letter-spacing: .02em; }
 
-.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__name, .movement-journal__property p,
+.menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, .movement-journal__name, .movement-journal__note, .movement-journal__property p,
 .movement-journal__property input, button, .text-button {
   font-weight: 600; }
 

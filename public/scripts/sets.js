@@ -287,7 +287,7 @@ function createMovementJournalEntryNode (movementName, completionDate, movementW
     entry.classList.add('movement-journal__entry');
     entry.innerHTML = `
             <div>
-                <p class="movement-journal__date">${completionDate}</p>
+                <p class="movement-journal__date">${completionDate} - entry</p>
             </div>
             <div class="movement-journal__property">
                 <h4>lbs</h4>
@@ -311,7 +311,7 @@ function createMovementJournalNoteNode (completionDate, note) {
     noteEntry.classList.add('movement-journal__entry');
     noteEntry.innerHTML = `
         <div>
-            <p class="movement-journal__date">${completionDate}</p>
+            <p class="movement-journal__date">${completionDate} - note</p>
             <p class="movement-journal__note">${note}</p>
         </div>
     `;

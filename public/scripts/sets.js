@@ -10,7 +10,10 @@ const movementJournal = document.querySelector('.movement-journal');
 const movementJournalButtons = document.querySelectorAll('.movement__journal-button');
 const movementJournalOverlay = document.querySelector('.overlay--movement-journal');
 const movementJournalAddEntryButton = document.querySelector('.movement-journal__add-new');
+const movementJournalAddNoteButton = document.querySelector('.movement-journal__add-note');
 const movementJournalSaveEntrybutton = document.querySelector('.movement-journal__entry-form .text-button');
+const movementJournalSaveNotebutton = document.querySelector('.movement-journal__note-form .text-button');
+
 
 function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
@@ -38,6 +41,7 @@ function setsFunctionality() {
 
     for (let thisButton of movementJournalButtons) {
         thisButton.addEventListener('click', () => {
+            console.log('clicked');
             closeAllOverlays();
             populateMovementJournal(thisButton.getAttribute('data-movementid'), thisButton.getAttribute('data-movementname'));
             movementJournalOverlay.classList.add('overlay--visible');
@@ -74,8 +78,19 @@ function setsFunctionality() {
         }
 
         form.classList.add('movement-journal__entry-form--visible');
-        movementJournalAddEntryButton.style.display = 'none';
+        movementJournalAddEntryButton.parentNode.style.display = 'none';
         form.querySelector('input').focus();
+    });
+
+    movementJournalAddNoteButton.addEventListener('click', () => {
+        const form = document.querySelector('.movement-journal__note-form');
+        const noteInput = form.querySelector('textarea');
+
+        noteInput.value = '';
+
+        form.classList.add('movement-journal__note-form--visible');
+        movementJournalAddNoteButton.parentNode.style.display = 'none';
+        noteInput.focus();
     });
 
     movementJournalSaveEntrybutton.addEventListener('click', () => {
@@ -89,11 +104,31 @@ function setsFunctionality() {
         const reps = form.querySelector('input[name="reps"]').value;
         const date = movementJournalSaveEntrybutton.getAttribute('data-date');
 
-        movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
         APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps)
-            .then(syncProgress(routineId));
+            .then(() => {
+                syncProgress(routineId)
+                movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
+            });
         form.classList.remove('movement-journal__entry-form--visible');
-        movementJournalAddEntryButton.style.display = 'block';
+        movementJournalAddEntryButton.parentNode.style.display = 'flex';
+    });
+
+    movementJournalSaveNotebutton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const form = movementJournalSaveNotebutton.parentNode;
+        const movementId = movementJournal.getAttribute('data-movementid');
+        const note = form.querySelector('textarea').value;
+        const date = movementJournalSaveNotebutton.getAttribute('data-date');
+        console.log(movementId);
+
+        movementJournal.prepend(createMovementJournalNoteNode(date, note));
+        APIRequest('POST', 'journal/addmovementnote', routineId, movementId, note)
+            .then(() => {
+                movementJournal.prepend(createMovementJournalNoteNode(date, note));
+            });
+        
+        form.classList.remove('movement-journal__note-form--visible');
+        movementJournalAddNoteButton.parentNode.style.display = 'flex';
     });
 
     deleteMovementButton.addEventListener('click', () => {
@@ -252,8 +287,7 @@ function createMovementJournalEntryNode (movementName, completionDate, movementW
     entry.classList.add('movement-journal__entry');
     entry.innerHTML = `
             <div>
-                <p class="movement-journal__date">${completionDate}</p>
-                <h3 class="movement-journal__name">${movementName}</h3>
+                <p class="movement-journal__date">${completionDate} - entry</p>
             </div>
             <div class="movement-journal__property">
                 <h4>lbs</h4>
@@ -272,6 +306,19 @@ function createMovementJournalEntryNode (movementName, completionDate, movementW
     return entry;
 }
 
+function createMovementJournalNoteNode (completionDate, note) {
+    let noteEntry = document.createElement('li');
+    noteEntry.classList.add('movement-journal__entry');
+    noteEntry.innerHTML = `
+        <div>
+            <p class="movement-journal__date">${completionDate} - note</p>
+            <p class="movement-journal__note">${note}</p>
+        </div>
+    `;
+
+    return noteEntry;
+}
+
 function populateMovementJournal (movementId, movementName) {
     let overlay = movementJournal.parentNode;
 
@@ -281,14 +328,22 @@ function populateMovementJournal (movementId, movementName) {
     overlay.querySelector('.overlay__header h2').innerText = `${movementName} - journal`;
 
     APIRequest('GET', 'journal/movement', movementId).then(movementLog => {
+        console.log(movementLog);
         for (let logItem of movementLog) {
-            movementJournal.appendChild(createMovementJournalEntryNode(
-                movementName,
-                logItem.to_char,
-                logItem.weight,
-                logItem.sets,
-                logItem.reps
-            ));
+            if (logItem.type === 'entry') {
+                movementJournal.appendChild(createMovementJournalEntryNode(
+                    movementName,
+                    logItem.to_char,
+                    logItem.weight,
+                    logItem.sets,
+                    logItem.reps
+                ));
+            } else if (logItem.type === 'note') {
+                movementJournal.appendChild(createMovementJournalNoteNode(
+                    logItem.to_char,
+                    logItem.note
+                ));
+            }
         }
 
     });

@@ -39,12 +39,14 @@ module.exports = {
     },
     getRoutines: async () => {
         return await runQuery(`
-            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines ORDER BY routine_order;
+            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines
+            ORDER BY routine_order;
         `);
     },
     getRoutineById: async (routineId) => {
         return await runQuery(`
-            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines WHERE routine_id=${routineId};
+            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines
+            WHERE routine_id=${routineId};
         `);
     },
     markRoutineComplete: async (routineId) => {
@@ -61,7 +63,8 @@ module.exports = {
             DELETE FROM journal WHERE routine_id=${routineId};
         `);
         let previousDate = await runQuery(`
-            SELECT completion_date FROM JOURNAL WHERE routine_id=${routineId};
+            SELECT completion_date FROM journal
+            WHERE routine_id=${routineId};
         `);
         return await runQuery(`
             UPDATE routines
@@ -199,7 +202,17 @@ module.exports = {
             UPDATE movements
             SET weight=${weight}, num_sets=${sets}, num_reps=${reps}, last_completed=CURRENT_DATE
             WHERE movement_id=${movementId};`);
-        return await runQuery(`INSERT INTO journal (movement_id, routine_id, weight, sets, reps)
-            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps});`);
+        return await runQuery(`
+            INSERT INTO journal (movement_id, routine_id, weight, sets, reps, type)
+            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry');
+        `);
+    },
+    addMovementJournalNote: async (movementId, routineId, note) => {
+        const fixedNote = SqlString.escape(note);
+        return await runQuery(`
+            INSERT INTO journal (movement_id, routine_id, note, type)
+            VALUES (${movementId}, ${routineId}, ${fixedNote}, 'note')
+            RETURNING movement_id;
+        `);
     }
 };

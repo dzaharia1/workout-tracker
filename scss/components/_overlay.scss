@@ -45,4 +45,19 @@
         background-position: center center;
         background-repeat: no-repeat;
     }
+
+    &__actions {
+        @extend %horizontal-start;
+        width: 100%;
+        margin-bottom: 16px;
+
+        button {
+            flex: 1;
+            margin-right: 8px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
 }

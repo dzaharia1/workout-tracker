@@ -18,6 +18,7 @@ const movementJournalSaveNotebutton = document.querySelector('.movement-journal_
 function setsFunctionality() {
     for (let thisButton of addMovementButtons) {
         thisButton.addEventListener('click', (e) => {
+            e.preventDefault();
             closeAllOverlays();
             addMovementOverlay.classList.add('overlay--visible');
             let form = document.querySelector('.movement--add-form');
@@ -28,19 +29,22 @@ function setsFunctionality() {
         });
     }
 
-    saveMovementButton.addEventListener('click', () => {
+    saveMovementButton.addEventListener('click', (e) => {
+        e.preventDefault();
         console.log('adding movement');
         let form = document.querySelector('.movement--add-form');
         saveMovement(form, form.getAttribute('data-setid'));
         closeAllOverlays();
     });
 
-    addSetButton.addEventListener('click', () => {
+    addSetButton.addEventListener('click', (e) => {
+        e.preventDefault();
         document.querySelector('.set__list').insertBefore(createSetNode(), addSetButton.parentNode);
     });
 
     for (let thisButton of movementJournalButtons) {
-        thisButton.addEventListener('click', () => {
+        thisButton.addEventListener('click', (e) => {
+            e.preventDefault();
             console.log('clicked');
             closeAllOverlays();
             populateMovementJournal(thisButton.getAttribute('data-movementid'), thisButton.getAttribute('data-movementname'));
@@ -49,7 +53,8 @@ function setsFunctionality() {
     }
 
     for (let thisButton of movementEditButtons) {
-        thisButton.addEventListener('click', () => {
+        thisButton.addEventListener('click', (e) => {
+            e.preventDefault();
             const movementNode = thisButton.parentNode.parentNode;
             populateEditDialog(
                 movementNode.getAttribute('data-movementid'),
@@ -64,12 +69,14 @@ function setsFunctionality() {
         })
     }
 
-    editMovementSaveButton.addEventListener('click', () => {
+    editMovementSaveButton.addEventListener('click', (e) => {
+        e.preventDefault();
         editMovement(editMovementSaveButton.parentNode.parentNode);
         closeAllOverlays();
     });
 
-    movementJournalAddEntryButton.addEventListener('click', () => {
+    movementJournalAddEntryButton.addEventListener('click', (e) => {
+        e.preventDefault();
         const form = document.querySelector('.movement-journal__entry-form');
         const inputs = form.querySelectorAll('input');
 
@@ -82,7 +89,8 @@ function setsFunctionality() {
         form.querySelector('input').focus();
     });
 
-    movementJournalAddNoteButton.addEventListener('click', () => {
+    movementJournalAddNoteButton.addEventListener('click', (e) => {
+        e.preventDefault();
         const form = document.querySelector('.movement-journal__note-form');
         const noteInput = form.querySelector('textarea');
 
@@ -93,7 +101,8 @@ function setsFunctionality() {
         noteInput.focus();
     });
 
-    movementJournalSaveEntrybutton.addEventListener('click', () => {
+    movementJournalSaveEntrybutton.addEventListener('click', (e) => {
+        e.preventDefault();
         const form = movementJournalSaveEntrybutton.parentNode;
         const movementId = movementJournal.getAttribute('data-movementid');
 
@@ -105,10 +114,10 @@ function setsFunctionality() {
         const date = movementJournalSaveEntrybutton.getAttribute('data-date');
 
         APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps)
-            .then(() => {
-                syncProgress(routineId)
-                movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
-            });
+        .then(() => {
+            syncProgress(routineId)
+            movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
+        });
         form.classList.remove('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.parentNode.style.display = 'flex';
     });
@@ -123,15 +132,16 @@ function setsFunctionality() {
 
         movementJournal.prepend(createMovementJournalNoteNode(date, note));
         APIRequest('POST', 'journal/addmovementnote', routineId, movementId, note)
-            .then(() => {
-                movementJournal.prepend(createMovementJournalNoteNode(date, note));
-            });
+        .then(() => {
+            movementJournal.prepend(createMovementJournalNoteNode(date, note));
+        });
         
         form.classList.remove('movement-journal__note-form--visible');
         movementJournalAddNoteButton.parentNode.style.display = 'flex';
     });
 
-    deleteMovementButton.addEventListener('click', () => {
+    deleteMovementButton.addEventListener('click', (e) => {
+        e.preventDefault();
         const movementId = deleteMovementButton.getAttribute('data-movementid');
         const movementNode = document.querySelector(`.movement[data-movementid="${movementId}"]`);
 
@@ -327,7 +337,8 @@ function populateMovementJournal (movementId, movementName) {
     overlay.querySelector('.movement-journal__entry-form .movement-journal__name').innerText = movementName;
     overlay.querySelector('.overlay__header h2').innerText = `${movementName} - journal`;
 
-    APIRequest('GET', 'journal/movement', movementId).then(movementLog => {
+    APIRequest('GET', 'journal/movement', movementId)
+    .then(movementLog => {
         console.log(movementLog);
         for (let logItem of movementLog) {
             if (logItem.type === 'entry') {

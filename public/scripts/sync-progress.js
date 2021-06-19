@@ -1,5 +1,6 @@
 function syncProgress(routineId) {
-    APIRequest('GET', 'movements', routineId).then(movements => {
+    APIRequest('GET', 'movements', routineId)
+    .then(movements => {
         for (let movement of movements) {
             indicators = document.querySelectorAll(`.progress-step[data-movementid="${movement.movement_id}"`);
             for (let indicator of indicators) {

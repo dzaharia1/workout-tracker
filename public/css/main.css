@@ -353,7 +353,7 @@
   background-color: rgba(255, 255, 255, 0.92);
   opacity: 0;
   backdrop-filter: blur(2px);
-  transition: 0.5s bottom cubic-bezier(0.25, 0.9, 0.21, 1), 0.5s opacity cubic-bezier(0.25, 0.9, 0.21, 1); }
+  transition: 0.4s bottom cubic-bezier(0.86, 0.63, 0.88, 0.64), 0.35s opacity cubic-bezier(0.86, 0.63, 0.88, 0.64); }
   .overlay--visible {
     opacity: 1;
     bottom: 0; }

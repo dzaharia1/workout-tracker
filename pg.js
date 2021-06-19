@@ -204,7 +204,8 @@ module.exports = {
             WHERE movement_id=${movementId};`);
         return await runQuery(`
             INSERT INTO journal (movement_id, routine_id, weight, sets, reps, type)
-            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry');
+            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry')
+            RETURNING movement_id, routine_id, weight, sets, reps;
         `);
     },
     addMovementJournalNote: async (movementId, routineId, note) => {

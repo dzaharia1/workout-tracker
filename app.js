@@ -52,10 +52,10 @@ async function assemblePageData (routineId) {
 
 app.post('/routine/add/:routineName/:routineOrder', async (req, res) => {
   console.log(`Adding ${req.params.routineName} to routines`);
-  addRoutine(
+  res.json(addRoutine(
     req.params.routineName,
     req.params.routineOrder
-  );
+  ));
 });
 
 app.put('/routine/markComplete/:routineId', async (req, res) => {
@@ -64,23 +64,22 @@ app.put('/routine/markComplete/:routineId', async (req, res) => {
 });
 
 app.post('/movement/add/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
-  console.log(`Adding ${req.params.movementName} to ${req.params.routineid} in ${req.params.setid}`);
-  addMovement(
+  res.json(addMovement(
     req.params.routineid,
     req.params.setid,
     req.params.movementName,
     req.params.weight,
     req.params.sets,
     req.params.reps
-  );
+  ));
 });
 
 app.put('/movement/edit/:movementid/:movementname/:setid', async (req, res) => {
-  editMovement(
+  res.json(editMovement(
     req.params.movementid,
     req.params.movementname,
     req.params.setid
-  )
+  ));
 });
  
 app.get('/movements/:routineid', async (req, res) => {
@@ -89,17 +88,27 @@ app.get('/movements/:routineid', async (req, res) => {
 });
 
 app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', async (req, res) => {
-  addMovementJournalEntry(
+  const ret = await addMovementJournalEntry(
     req.params.routineid,
     req.params.movementid,
     req.params.weight,
     req.params.sets,
     req.params.reps
   );
+
+  res.json(ret);
+});
+
+app.post(`/journal/addmovementnote/:routineid/:movementid/:note`, async (req, res) => {
+  res.json(addMovementJournalNote(
+    req.params.movementid,
+    req.params.routineid,
+    req.params.note
+  ));
 });
 
 app.delete('/movement/delete/:movementid/:routineid', async (req, res) => {
-  res.send(deleteMovement(
+  res.json(deleteMovement(
     req.params.movementid,
     req.params.routineid
   ));

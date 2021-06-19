@@ -4,8 +4,15 @@
         <h2>Overhead Extensions - Journal</h2>
         <button class="overlay__close-button"></button>
     </div>
-    <button class="movement-journal__add-new text-button">Add entry</button>
-    <div class="movement-journal__entry movement-journal__entry-form">
+    <div class="overlay__actions">
+        <button class="movement-journal__add-new text-button">Add entry</button>
+        <button class="movement-journal__add-note text-button">Add note</button>
+    </div>
+    <form class="movement-journal__entry movement-journal__note-form">
+        <textarea name="note" rows="3" placeholder="Add a note"></textarea>
+        <button class="text-button" data-date="<%= todaysDate %>">Save note</button>
+    </form>
+    <form class="movement-journal__entry movement-journal__entry-form">
         <div>
             <p class="movement-journal__date"></p>
             <h3 class="movement-journal__name">Overhead Extensions</h3>
@@ -22,8 +29,8 @@
             <label for="reps">reps</label>
             <input type="number" name="reps">
         </div>
-        <button class="text-button" data-date="<%= todaysDate %>">Save</button>
-    </div>
+        <button class="text-button" data-date="<%= todaysDate %>">Save entry</button>
+    </form>
     <ul class="movement-journal">
     </ul>
 </div>

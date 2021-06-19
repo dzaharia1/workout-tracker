@@ -116,7 +116,18 @@ module.exports = {
             UPDATE movements
             SET weight=${weight}, num_sets=${sets}, num_reps=${reps}, last_completed=CURRENT_DATE
             WHERE movement_id=${movementId};`);
-        return await runQuery(`INSERT INTO journal (movement_id, routine_id, weight, sets, reps)
-            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps});`);
+        return await runQuery(`
+            INSERT INTO journal (movement_id, routine_id, weight, sets, reps, type)
+            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry')
+            RETURNING movement_id, routine_id, weight, sets, reps;
+        `);
+    },
+    addMovementJournalNote: async (movementId, routineId, note) => {
+        const fixedNote = SqlString.escape(note);
+        return await runQuery(`
+            INSERT INTO journal (movement_id, routine_id, note, type)
+            VALUES (${movementId}, ${routineId}, ${fixedNote}, 'note')
+            RETURNING movement_id;
+        `);
     }
 };

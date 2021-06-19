@@ -12,8 +12,8 @@
     background-color: transparentize($white, .92);
     opacity: 0;
     backdrop-filter: blur(2px);
-    transition: .5s bottom cubic-bezier(0.25, 0.9, 0.21, 1),
-                .5s opacity cubic-bezier(0.25, 0.9, 0.21, 1);
+    transition: 0.4s bottom cubic-bezier(0.86, 0.63, 0.88, 0.64),
+                0.35s opacity cubic-bezier(0.86, 0.63, 0.88, 0.64);
     
     &--visible {
         opacity: 1;
@@ -44,5 +44,20 @@
         background-image: url('/img/close.svg');
         background-position: center center;
         background-repeat: no-repeat;
+    }
+
+    &__actions {
+        @extend %horizontal-start;
+        width: 100%;
+        margin-bottom: 16px;
+
+        button {
+            flex: 1;
+            margin-right: 8px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
 }

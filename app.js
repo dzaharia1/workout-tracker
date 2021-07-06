@@ -20,14 +20,18 @@ app.host = app.set('host', process.env.HOST || localhost);
 app.port = app.set('port', process.env.PORT || localport);
 
 app.get('/', async (req, res) => {
-  res.render('index', await assemblePageData());
+  res.render('index', await assembleRoutinePageData());
+});
+
+app.get('/journal', async (req, res) => {
+  res.render('journal', await assembleRoutinePageData());
 });
 
 app.get('/routine/:routine', async (req, res) => {
-  res.render('index', await assemblePageData(req.params.routine));
+  res.render('index', await assembleRoutinePageData(req.params.routine));
 });
 
-async function assemblePageData (routineId) {
+async function assembleRoutinePageData (routineId) {
   let routines = await getRoutines();
   let nextRoutine = await getUpNextRoutine();
   let thisRoutine;
@@ -48,6 +52,15 @@ async function assemblePageData (routineId) {
     numSets: numSets[0].count,
     todaysDate: todaysDate
   }
+}
+
+async function assembleJournaData (year, month) {
+  return {
+    routines: await getRoutines(),
+    nextRoutine: await getUpNextRoutine()[0],
+    journal: await getJournalByMonth(year, month),
+    todaysDate: await getTodaysDate()
+  };
 }
 
 app.post('/routine/add/:routineName/:routineOrder', async (req, res) => {

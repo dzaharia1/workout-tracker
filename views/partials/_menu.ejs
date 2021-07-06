@@ -1,0 +1,35 @@
+<nav class="menu">
+    <div class="menu__header">
+        <button class="menu__close"></button>
+        <h2 class="header__title">Routines</h2>
+        <h2 class="header__journal-button">Sort</h2>
+    </div>
+    <ul class="menu__routine-list">
+        <% for (let routine of routines) { %>
+            <li class="menu__routine" data-id="<%= routine.routine_id %>" data-order="<%= routine.routine_order %>">
+                <a href="/routine/<%= routine.routine_id %>">
+                    <%= routine.routine_name %>
+                </a>
+                <% if (routine.routine_id===nextRoutine.routine_id) { %>
+                    <aside class="menu__routine-completed--oldest">Up Next</aside>
+                    <% } else { %>
+                        <aside class="menu__routine-completed">
+                            <%= routine.to_char %>
+                        </aside>
+                        <% } %>
+                            <button class="menu__routine-drag-handle"></button>
+            </li>
+            <% } %>
+                <li class="menu__add-routine">
+                    <input type="text" id="" placeholder="Name your routine">
+                    <button class="menu__cancel-add"></button>
+                </li>
+    </ul>
+    <button class="menu__create-routine">
+        <img src="/img/add.svg" alt="">
+        Create a routine
+    </button>
+    <div class="menu__header">
+        <h2 class="header__title">View journal</h2>
+    </div>
+</nav>

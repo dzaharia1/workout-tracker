@@ -277,7 +277,7 @@ function createSetNode() {
             <div class="progress-bar"></div>
             <button class="movement__add-new">
                 <img src="/img/add.svg" alt="">
-                Add movement
+                Add a movement
             </button>
         </div>
         <ul class="movement__list" data-setid="${setNumber}">

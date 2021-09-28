@@ -333,6 +333,7 @@
   .movement--add-form select {
     background: none;
     border: none;
+    border-radius: 0;
     border-bottom: 1px #2b3438 solid;
     padding: 8px 0;
     margin-bottom: 8px;
@@ -458,7 +459,8 @@
 button {
   background: none;
   border: none;
-  border-radius: 0; }
+  border-radius: 0;
+  color: #2b3438; }
 
 .text-button {
   width: 100%;

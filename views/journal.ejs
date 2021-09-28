@@ -1,4 +1,17 @@
 <%- include ('partials/_head') %>
 <%- include ('partials/_journal-header') %>
-
+<section class="journal">
+    <div id="calendar"></div>
+</section>
+<link href='fullcalendar/main.css' rel='stylesheet' />
+<script src='fullcalendar/main.js'></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth'
+        });
+        calendar.render();
+    });
+</script>
 <%- include ('partials/_foot') %>

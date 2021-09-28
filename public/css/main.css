@@ -342,6 +342,9 @@
   .movement--add-form .movement__property-divider {
     background-color: #7a939e; }
 
+.journal {
+  padding: 88px 16px 0; }
+
 .overlay {
   position: fixed;
   bottom: -50vh;

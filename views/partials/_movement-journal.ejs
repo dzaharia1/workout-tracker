@@ -19,15 +19,15 @@
         </div>
         <div class="movement-journal__property">
             <label for="weight">lbs</label>
-            <input type="number" name="weight">
+            <input inputmode="numeric" pattern="[0-9]*" type="number" name="weight">
         </div>
         <div class="movement-journal__property">
             <label for="sets">sets</label>
-            <input type="number" name="sets">
+            <input inputmode="numeric" pattern="[0-9]*" type="number" name="sets">
         </div>
         <div class="movement-journal__property">
             <label for="reps">reps</label>
-            <input type="number" name="reps">
+            <input inputmode="numeric" pattern="[0-9]*" type="number" name="reps">
         </div>
         <button class="text-button" data-date="<%= todaysDate %>">Save entry</button>
     </form>

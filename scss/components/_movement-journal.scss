@@ -21,6 +21,7 @@
             background: none;
             border: none;
             border-bottom: 1px $slate5 solid;
+            border-radius: 0;
         }
 
         .movement-journal__property:first-child {
@@ -97,6 +98,7 @@
 
         input {
             border: none;
+            border-radius: 0;
             border-bottom: 1px $slate5 solid;
             background: none;
         }

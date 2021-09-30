@@ -397,7 +397,8 @@
       width: 100%;
       background: none;
       border: none;
-      border-bottom: 1px #2b3438 solid; }
+      border-bottom: 1px #2b3438 solid;
+      border-radius: 0; }
     .movement-journal__entry-form .movement-journal__property:first-child, .movement-journal__note-form .movement-journal__property:first-child {
       border: none; }
   .movement-journal__entry {
@@ -433,6 +434,7 @@
       margin-bottom: 4px; }
     .movement-journal__property input {
       border: none;
+      border-radius: 0;
       border-bottom: 1px #2b3438 solid;
       background: none; }
     .movement-journal__property--increase p {

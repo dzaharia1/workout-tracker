@@ -502,7 +502,7 @@ input[type="checkbox"] {
   border: 2px #3f4c52 solid; }
   input[type="checkbox"]:checked {
     background-color: #00a775;
-    border-color: #00a775; }
+    border-color: #3f4c52; }
 
 a {
   text-decoration: none; }

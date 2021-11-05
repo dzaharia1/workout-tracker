@@ -4,7 +4,7 @@
   flex-direction: row;
   align-items: flex-start; }
 
-.menu__header, .menu__routine, .menu__routine--new, .menu__create-routine, .menu__add-routine, .routine__add-to-log, .set__header, .movement__add-new, .movement__list, .movement__header, .movement__properties, .overlay__header, .progress-bar {
+.menu__header, .menu__routine, .menu__routine--new, .menu__create-routine, .menu__add-routine, .routine__add-to-log, .set__header, .movement__add-new, .movement__list, .movement__header, .movement__properties, .overlay__header, .movement-journal__entry div:first-child, .progress-bar {
   display: flex;
   flex-direction: row;
   align-items: center; }
@@ -14,7 +14,7 @@
   flex-direction: row;
   align-items: flex-end; }
 
-.menu, .routine__progress-bar, .set, .set__list, .movement--add-form, .overlay {
+.menu, .routine__progress-bar, .set, .set__list, .movement, .movement--add-form, .overlay {
   display: flex;
   flex-direction: column;
   align-items: flex-start; }
@@ -26,7 +26,7 @@
 
 .menu__routine a, .menu__routine-completed--oldest, .menu__create-routine, .menu__add-routine input, .set__title, .movement__name, .movement__name-field, .movement__set-field, .overlay__header h2, .movement-journal__entry-form textarea, .movement-journal__note-form textarea, .movement-journal__name, .movement-journal__note, .movement-journal__property p,
 .movement-journal__property input, button, .text-button, .routine__progress p, .movement__add-new, .movement__property h4,
-.movement__property label, body, .header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.movement__property label, body, .header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__date, .movement__instruction-tag, .movement-journal__date, .movement-journal__instruction-tag, .movement-journal__property h4,
 .movement-journal__property label {
   font-family: "Montserrat", helvetica, sans-serif;
   font-weight: normal; }
@@ -60,7 +60,7 @@
 .movement-journal__property input, button, .text-button {
   font-weight: 600; }
 
-.header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__thing, .movement-journal__date, .movement-journal__property h4,
+.header__journal-button--complete, .routine__add-to-log, .header__journal-button, .menu__routine-completed, .movement__date, .movement__instruction-tag, .movement-journal__date, .movement-journal__instruction-tag, .movement-journal__property h4,
 .movement-journal__property label {
   font-size: 10px;
   line-height: 12px; }
@@ -113,6 +113,7 @@
   background-color: rgba(255, 255, 255, 0.9);
   opacity: 0;
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   transition: 0.5s left cubic-bezier(0.25, 0.9, 0.21, 1), 0.5s opacity cubic-bezier(0.25, 0.9, 0.21, 1); }
   .menu--active {
     opacity: 1;
@@ -266,8 +267,14 @@
     width: 16px;
     height: 16px;
     margin-right: 8px; }
-  .movement__thing {
+  .movement__date, .movement__instruction-tag {
     margin: 5px 0; }
+  .movement__instruction-tag {
+    padding: 2px 6px;
+    margin: 2px 0 3px;
+    border-radius: 2px;
+    background-color: #00a775;
+    flex-grow: 0; }
   .movement__list {
     overflow-x: scroll;
     width: 100%; }
@@ -354,6 +361,7 @@
   background-color: rgba(255, 255, 255, 0.92);
   opacity: 0;
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   transition: 0.4s bottom cubic-bezier(0.86, 0.63, 0.88, 0.64), 0.35s opacity cubic-bezier(0.86, 0.63, 0.88, 0.64); }
   .overlay--visible {
     opacity: 1;
@@ -412,11 +420,23 @@
       padding-top: 0;
       border-top: none; }
     .movement-journal__entry div:first-child {
+      flex-wrap: wrap;
       flex: 1; }
+      .movement-journal__entry div:first-child input {
+        margin-right: 4px; }
     .movement-journal__entry .text-button {
       margin-top: 16px; }
   .movement-journal__date {
-    margin-bottom: 4px; }
+    margin-right: 8px; }
+  .movement-journal__instruction-tag {
+    display: block;
+    padding: 3px 6px;
+    border-radius: 2px;
+    background-color: #00a775;
+    color: #ffffff; }
+  .movement-journal__name {
+    margin-bottom: 6px;
+    width: 100%; }
   .movement-journal__property {
     flex-direction: column-reverse;
     width: 41px;
@@ -469,6 +489,20 @@ button {
   padding: 12px;
   border: 2px #2b3438 solid;
   border-bottom-width: 4px; }
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  width: 16px;
+  height: 16px;
+  border: 2px #3f4c52 solid; }
+  input[type="checkbox"]:checked {
+    background-color: #00a775;
+    border-color: #3f4c52; }
 
 a {
   text-decoration: none; }

@@ -87,13 +87,14 @@ app.get('/movements/:routineid', async (req, res) => {
   res.json(ret);
 });
 
-app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps', async (req, res) => {
+app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps/:instruction', async (req, res) => {
   const ret = await addMovementJournalEntry(
     req.params.routineid,
     req.params.movementid,
     req.params.weight,
     req.params.sets,
-    req.params.reps
+    req.params.reps,
+    req.params.instruction
   );
 
   res.json(ret);

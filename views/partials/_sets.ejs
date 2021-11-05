@@ -29,7 +29,12 @@
                                 <button class="movement__edit-button"></button>
                                 <button class="movement__journal-button" data-movementname="<%= movement.movement_name %>" data-movementid="<%= movement.movement_id %>"></button>
                             </div>
-                            <p class="movement__thing">Last – <%= movement.to_char %>:</p>
+                            <% if (movement.instruction == true) { %>
+                                <p class="movement__instruction-tag">Instruction</p>
+                            <% } else { %>
+                                <p class="movement__date">Last – <%= movement.to_char %>:</p>
+                            <% } %>
+
                             <div class="movement__properties">
                                 <div class="movement__property">
                                     <h4>lbs</h4>

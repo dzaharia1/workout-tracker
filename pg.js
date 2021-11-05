@@ -197,14 +197,14 @@ module.exports = {
             ORDER BY completion_date DESC, entry_id DESC;
         `);
     },
-    addMovementJournalEntry: async (movementId, routineId, weight, sets, reps) => {
+    addMovementJournalEntry: async (movementId, routineId, weight, sets, reps, instruction) => {
         await runQuery(`
             UPDATE movements
-            SET weight=${weight}, num_sets=${sets}, num_reps=${reps}, last_completed=CURRENT_DATE
+            SET weight=${weight}, num_sets=${sets}, num_reps=${reps}, last_completed=CURRENT_DATE, instruction=${instruction}
             WHERE movement_id=${movementId};`);
         return await runQuery(`
-            INSERT INTO journal (movement_id, routine_id, weight, sets, reps, type)
-            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry')
+            INSERT INTO journal (movement_id, routine_id, weight, sets, reps, type, instruction)
+            VALUES (${movementId}, ${routineId}, ${weight}, ${sets}, ${reps}, 'entry', ${instruction})
             RETURNING movement_id, routine_id, weight, sets, reps;
         `);
     },

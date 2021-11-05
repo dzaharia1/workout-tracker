@@ -32,6 +32,23 @@ button {
 	border-bottom-width: 4px;
 }
 
+input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	outline: none;
+	width: 16px;
+	height: 16px;
+	border: 2px $slate4 solid;
+
+	&:checked {
+		background-color: $green;
+		border-color: $green;
+	}
+}
+
 a {
 	text-decoration: none;
 }

@@ -112,11 +112,12 @@ function setsFunctionality() {
         const sets = form.querySelector('input[name="sets"]').value;
         const reps = form.querySelector('input[name="reps"]').value;
         const date = movementJournalSaveEntrybutton.getAttribute('data-date');
+        const instruction = document.querySelector('input[name="instruction"]').checked;
 
-        APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps)
+        APIRequest('POST', 'journal/addmovement', movementId, routineId, weight, sets, reps, instruction)
         .then(() => {
             syncProgress(routineId)
-            movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps));
+            movementJournal.prepend(createMovementJournalEntryNode(name, date, weight, sets, reps, instruction));
         });
         form.classList.remove('movement-journal__entry-form--visible');
         movementJournalAddEntryButton.parentNode.style.display = 'flex';
@@ -292,12 +293,18 @@ function createSetNode() {
     return set;
 }
 
-function createMovementJournalEntryNode (movementName, completionDate, movementWeight, movementSets, movementReps) {
+function createMovementJournalEntryNode (movementName, completionDate, movementWeight, movementSets, movementReps, instruction) {
     let entry = document.createElement('li');
+    let instructionTag = '';
     entry.classList.add('movement-journal__entry');
+    if (instruction) {
+        instructionTag = `<p class="movement-journal__instruction-tag">Instruction</p>`;
+    }
+    
     entry.innerHTML = `
             <div>
-                <p class="movement-journal__date">${completionDate} - entry</p>
+                <p class="movement-journal__date">${completionDate} </p>
+                ${instructionTag}
             </div>
             <div class="movement-journal__property">
                 <h4>lbs</h4>
@@ -347,7 +354,8 @@ function populateMovementJournal (movementId, movementName) {
                     logItem.to_char,
                     logItem.weight,
                     logItem.sets,
-                    logItem.reps
+                    logItem.reps,
+                    logItem.instruction
                 ));
             } else if (logItem.type === 'note') {
                 movementJournal.appendChild(createMovementJournalNoteNode(

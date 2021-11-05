@@ -37,6 +37,7 @@
 }
 
 .movement {
+    @extend %vertical-start;
     width: 228px;
     background-color: $slate5;
     color: $white;
@@ -55,9 +56,18 @@
         }
     }
 
-    &__thing {
+    &__date,
+    &__instruction-tag {
         @extend %caption;
         margin: 5px 0;
+    }
+
+    &__instruction-tag {
+        padding: 2px 6px;
+        margin: 2px 0 3px;
+        border-radius: 2px;;
+        background-color: $green;
+        flex-grow: 0;
     }
 
     &__list {

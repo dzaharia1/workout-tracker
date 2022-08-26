@@ -123,7 +123,7 @@ module.exports = {
         return await runQuery(`
             INSERT INTO movements (routine_id, set_id, movement_name, movement_slug, weight, num_sets, num_reps)
             VALUES (${routineId}, ${setId}, ${fixedName}, ${slug}, ${movementWeight}, ${movementSets}, ${movementReps})
-            RETURNING movement_id;`);
+            RETURNING *;`);
     },
     updateMovementNumbers: async (movementId, weight, sets, reps) => {
         return await runQuery(`

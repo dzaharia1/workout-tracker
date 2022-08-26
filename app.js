@@ -3,6 +3,7 @@ const path = require('path');
 const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
+const cors = require('cors');
 const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements, addMovementJournalNote } = require('./pg.js');
 const app = express();
 
@@ -11,6 +12,7 @@ const localhost = 'http://localhost';
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.engine('ejs', cons.ejs);
 app.set('view engine', 'ejs');
@@ -64,7 +66,8 @@ app.put('/routine/markComplete/:routineId', async (req, res) => {
 });
 
 app.post('/movement/add/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
-  res.json(addMovement(
+  console.log(`Got: ${req.params.movementName}`)
+  res.json(await addMovement(
     req.params.routineid,
     req.params.setid,
     req.params.movementName,
@@ -84,6 +87,11 @@ app.put('/movement/edit/:movementid/:movementname/:setid', async (req, res) => {
  
 app.get('/movements/:routineid', async (req, res) => {
   const ret = await getRoutineMovements(req.params.routineid);
+  res.json(ret);
+});
+
+app.get('/routines', async (req, res) => {
+  const ret = await getRoutines();
   res.json(ret);
 });
 

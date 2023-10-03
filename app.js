@@ -84,6 +84,11 @@ app.put('/movement/edit/:movementid/:movementname/:setid', async (req, res) => {
     req.params.setid
   ));
 });
+
+app.get('/movements/current', async (req, res) => {
+  const ret = await assemblePageData();
+  res.json(ret);
+});
  
 app.get('/movements/:routineid', async (req, res) => {
   const ret = await getRoutineMovements(req.params.routineid);

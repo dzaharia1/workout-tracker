@@ -25,9 +25,9 @@ app.get('/', async (req, res) => {
   res.render('index', await assemblePageData());
 });
 
-app.get('/routine/:routine', async (req, res) => {
-  res.render('index', await assemblePageData(req.params.routine));
-});
+// app.get('/routine/:routine', async (req, res) => {
+//   res.render('index', await assemblePageData(req.params.routine));
+// });
 
 async function assemblePageData (routineId) {
   let routines = await getRoutines();
@@ -60,9 +60,10 @@ app.post('/routine/add/:routineName/:routineOrder', async (req, res) => {
   ));
 });
 
-app.put('/routine/markComplete/:routineId', async (req, res) => {
+app.post('/routine/markComplete/:routineId', async (req, res) => {
   console.log(`marking routine ${req.params.routineId} complete`);
-  markRoutineComplete(req.params.routineId);
+  let response = await markRoutineComplete(req.params.routineId);
+  res.json(response);
 });
 
 app.post('/movement/add/:routineid/:setid/:movementName/:weight/:sets/:reps', async (req, res) => {
@@ -85,8 +86,13 @@ app.put('/movement/edit/:movementid/:movementname/:setid', async (req, res) => {
   ));
 });
 
-app.get('/movements/current', async (req, res) => {
+app.get('/routine/current', async (req, res) => {
   const ret = await assemblePageData();
+  res.json(ret);
+});
+
+app.get('/routine/:routineid', async (req, res) => {
+  const ret = await assemblePageData(req.params.routineid);
   res.json(ret);
 });
  
@@ -101,6 +107,7 @@ app.get('/routines', async (req, res) => {
 });
 
 app.post('/journal/addmovement/:routineid/:movementid/:weight/:sets/:reps/:instruction', async (req, res) => {
+  console.log(req.params);
   const ret = await addMovementJournalEntry(
     req.params.routineid,
     req.params.movementid,

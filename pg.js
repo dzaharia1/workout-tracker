@@ -50,13 +50,10 @@ module.exports = {
         `);
     },
     markRoutineComplete: async (routineId) => {
-        await runQuery(`
-            INSERT INTO journal (routine_id)
-            VALUES (${routineId})
-            RETURNING routine_id;`);
         return await runQuery(`UPDATE routines
             SET last_logged=CURRENT_DATE
-            WHERE routine_id=${routineId};`);
+            WHERE routine_id=${routineId}
+            RETURNING routines;`);
     },
     unmarkRoutineComplete: async (routineId) => {
         await runQuery(`

@@ -75,14 +75,11 @@ module.exports = {
         `);
     },
     markRoutineComplete: async (routineId) => {
-        await runQuery(` INSERT INTO journal (routine_id)
-        VALUES (${routineId})
-        RETURNING routine_id`);
-
-        return await runQuery(`UPDATE routines
-            SET last_logged=CURRENT_DATE
-            WHERE routine_id=${routineId}
-            RETURNING routines;`);
+        return await runQuery(`
+            INSERT INTO journal (routine_id)
+            VALUES (${routineId})
+            RETURNING routine_id
+        `);
     },
     unmarkRoutineComplete: async (routineId) => {
         return await runQuery(`
@@ -149,11 +146,30 @@ module.exports = {
     },
     getRoutineMovements: async (routineId) => {
         return await runQuery(`
-            SELECT *, TO_CHAR(last_completed :: DATE, 'Mon dd, ''yy')
-            FROM movements
+            SELECT
+                M.movement_name,
+                M.movement_id,
+                M.weight,
+                M.num_sets,
+                M.num_reps,
+                M.set_id,
+                M.instruction,
+                (
+                    SELECT TO_CHAR(J.completion_date  :: DATE, 'Mon dd, ''yy')
+                    FROM journal J
+                    WHERE J.movement_id = M.movement_id
+                    ORDER BY J.completion_date DESC LIMIT 1
+                ) as last_logged
+            FROM movements M
             WHERE routine_id=${routineId}
-            ORDER BY set_id, movement_id;
+            ORDER BY M.set_id, M.movement_id
         `);
+        // return await runQuery(`
+        //     SELECT *, TO_CHAR(last_completed :: DATE, 'Mon dd, ''yy')
+        //     FROM movements
+        //     WHERE routine_id=${routineId}
+        //     ORDER BY set_id, movement_id;
+        // `);
     },
     addMovement: async (routineId, setId, movementName, movementWeight, movementSets, movementReps) => {
         const fixedName = SqlString.escape(movementName);

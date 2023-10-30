@@ -4,7 +4,7 @@ const cons = require('consolidate');
 const postgres = require('./pg.js');
 const ejs = require('ejs');
 const cors = require('cors');
-const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements, addMovementJournalNote } = require('./pg.js');
+const { getRoutines, addRoutine, getUpNextRoutine, getNumSets, getRoutineMovements, getRoutineJournal, getRoutineById, addMovement, getMovementJournal, addMovementJournalEntry, getTodaysDate, markRoutineComplete, editMovement, deleteMovement, getAllMovements, addMovementJournalNote, unmarkRoutineComplete } = require('./pg.js');
 const app = express();
 
 const localport = '3333';
@@ -63,6 +63,12 @@ app.post('/routine/add/:routineName/:routineOrder', async (req, res) => {
 app.post('/routine/markComplete/:routineId', async (req, res) => {
   console.log(`marking routine ${req.params.routineId} complete`);
   let response = await markRoutineComplete(req.params.routineId);
+  res.json(response);
+});
+
+app.post('/routine/unmarkcomplete/:routineId', async (req, res) => {
+  console.log(`unmarking routine ${req.params.routineId} complete`);
+  let response = await unmarkRoutineComplete(req.params.routineId);
   res.json(response);
 });
 
@@ -143,6 +149,7 @@ app.get('/journal/movement/:movementid', async (req, res) => {
 
 app.get('/journal/routine/:routineid', async (req, res) => {
   let journal = await getRoutineJournal(req.params.routineid);
+  res.json(journal);
 });
 
 var server = app.listen(app.get('port'), function() {

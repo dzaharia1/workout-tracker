@@ -26,7 +26,11 @@ async function runQuery(query) {
         console.error('~~~~~~~~~~~~~~there was an error~~~~~~~~~~~~~~~~');
         console.error(error.stack);
     } finally {
-        return rows.rows;
+        if (rows.rows)
+        {
+            return rows.rows;
+        }
+        return rows;
     }
 }
 
@@ -39,40 +43,75 @@ module.exports = {
     },
     getRoutines: async () => {
         return await runQuery(`
-            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines
+            SELECT
+                R.routine_name,
+                R.routine_id,
+                (
+                    SELECT TO_CHAR(J.completion_date :: DATE, 'Mon dd, ''yy')
+                    FROM journal J
+                    WHERE J.routine_id = R.routine_id
+                        AND J.movement_id IS NULL
+                    ORDER BY J.completion_date DESC LIMIT 1
+                ) AS last_logged
+            FROM routines R 
             ORDER BY routine_order;
         `);
     },
     getRoutineById: async (routineId) => {
         return await runQuery(`
-            SELECT *, TO_CHAR(last_logged :: DATE, 'Mon dd, ''yy') FROM routines
-            WHERE routine_id=${routineId};
+            SELECT
+                R.routine_name,
+                R.routine_id,
+                (
+                    SELECT TO_CHAR(J.completion_date :: DATE, 'Mon dd, ''yy')
+                    FROM journal J
+                    WHERE J.routine_id = R.routine_id
+                        AND J.movement_id IS NULL
+                    ORDER BY J.completion_date DESC LIMIT 1
+                ) AS last_logged
+            FROM routines R 
+            WHERE routine_id=${routineId}
+            ORDER BY routine_order;
         `);
     },
     markRoutineComplete: async (routineId) => {
+        await runQuery(` INSERT INTO journal (routine_id)
+        VALUES (${routineId})
+        RETURNING routine_id`);
+
         return await runQuery(`UPDATE routines
             SET last_logged=CURRENT_DATE
             WHERE routine_id=${routineId}
             RETURNING routines;`);
     },
     unmarkRoutineComplete: async (routineId) => {
-        await runQuery(`
-            DELETE FROM journal WHERE routine_id=${routineId};
-        `);
-        let previousDate = await runQuery(`
-            SELECT completion_date FROM journal
-            WHERE routine_id=${routineId};
-        `);
         return await runQuery(`
-            UPDATE routines
-            SET last_logged=${previousDate}
-            WHERE routine_id=${routineId}`);
+            WITH first_match AS (
+                SELECT *
+                FROM journal
+                WHERE routine_id=${routineId}
+                AND movement_id IS NULL
+                ORDER BY completion_date DESC LIMIT 1
+            )
+            DELETE FROM journal
+            WHERE entry_id = (SELECT entry_id FROM first_match)
+            RETURNING *;
+        `)
     },
     getUpNextRoutine: async () => {
         return await runQuery(`
-            SELECT * FROM ROUTINES
-            ORDER BY last_logged
-            FETCH FIRST 1 rows ONLY;
+            SELECT
+                R.routine_name,
+                R.routine_id,
+                (
+                    SELECT J.completion_date
+                    FROM journal J
+                    WHERE J.routine_id = R.routine_id
+                        AND J.movement_id IS NULL
+                    ORDER BY J.completion_date DESC LIMIT 1
+                ) AS last_logged
+            FROM routines R
+            ORDER BY last_logged LIMIT 1;
         `);
     },
     addRoutine: async (routineName, routineOrder) => {
@@ -90,7 +129,9 @@ module.exports = {
     },
     getRoutineJournal: async (routineId) => {
         return await runQuery(`
-            SELECT * FROM journal WHERE routine_id=${routineId}
+            SELECT *, TO_CHAR(completion_date :: DATE, 'Mon dd, ''yy')
+            FROM journal
+            WHERE routine_id=${routineId}
         `);
     },
     getNumSets: async (routineId) => {

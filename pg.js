@@ -292,7 +292,7 @@ module.exports = {
             FROM journal J
             WHERE movement_id IS NULL
             ORDER BY completion_date desc
-            LIMIT 31
+            LIMIT 100
         `);
     }
 };

@@ -269,5 +269,30 @@ module.exports = {
             VALUES (${movementId}, ${routineId}, ${fixedNote}, 'note')
             RETURNING movement_id;
         `);
+    },
+    getRoutineCalendar: async () => {
+        return await runQuery(`
+            SELECT
+                J.routine_id,
+                J.completion_date,
+                (
+                    SELECT TO_CHAR(J.completion_date :: DATE, 'fmMM fmdd, yyyy')
+                    FROM journal
+                    WHERE routine_id = J.routine_id 
+                        AND completion_date = J.completion_date 
+                        AND movement_id IS NULL
+                    ORDER BY completion_date desc
+                    LIMIT 1
+                ) as pretty_date,
+                (
+                    SELECT routine_name
+                    FROM routines
+                    WHERE routine_id = J.routine_id
+                ) as routine_name
+            FROM journal J
+            WHERE movement_id IS NULL
+            ORDER BY completion_date desc
+            LIMIT 31
+        `);
     }
 };

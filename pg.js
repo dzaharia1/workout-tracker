@@ -46,6 +46,7 @@ module.exports = {
             SELECT
                 R.routine_name,
                 R.routine_id,
+                R.skipped,
                 (
                     SELECT TO_CHAR(J.completion_date :: DATE, 'Mon dd, ''yy')
                     FROM journal J
@@ -108,6 +109,7 @@ module.exports = {
                     ORDER BY J.completion_date DESC LIMIT 1
                 ) AS last_logged
             FROM routines R
+            WHERE R.skipped IS FALSE
             ORDER BY last_logged LIMIT 1;
         `);
     },
